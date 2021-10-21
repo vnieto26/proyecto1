@@ -225,7 +225,7 @@
 
     <!-- products section starts  -->
 
-    <section class="" id="">
+    <section class="review" id="review">
 
 
 
@@ -236,7 +236,63 @@
     <!-- review section starts  -->
 
     <section class="review" id="review">
+        <div class="container p-4 mt-4">
+            <!-- <div class="row">
+                <div class="col-4">
+                    <form method="post" action="/crear_producto" enctype="multipart/form-data">
+                        <div class="card">
+                            <div class="card-header">
+                                Ingresar Comentarios
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Crear Comentario</h5>
+                                <p class="card-text">
+                                <div class="form-group">
+                                    <label for="producto">Comentario:</label>
+                                    <input id="producto" class="form-control" type="textarea" name="producto" required>
+                                </div>
+                                <div class="form-group">
+                                    <input class="btn btn-success" type="submit" value="Agregar">
+                                    <a href="{{url_for('home')}}" class="btn btn-primary">Regresar</a>
+                                </div>
+                                </p>
+                            </div>
+                        </div>
 
+                    </form>
+                </div> -->
+                <div class="col">
+                    <h2>Listado de Comentarios</h2>
+                    <table class="table table-light">
+                        <thead class="thead-light">
+                            <tr style="text-align: center">
+                                <th>#</th>
+                                <th>Comentario</th>
+                                <th>Usuario</th>
+                                <th>Producto</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for comenta in comentarios %}
+                            <tr>
+                                <td>{{comenta.id}}</td>
+                                <td>{{comenta.comentario}}</td>
+                                <td>{{comenta.users.nombre}}</td>
+                                <td>{{comenta.products.producto}}</td>
+                                <td>
+                                    <a class="btn btn-warning" href="/home/edit_comenta/{{comenta.id}}">Editar</a> |
+                                    <a onclick="return confirm('¿Desea borrar el producto?')" class="btn btn-danger"
+                                        href="/home/delete_comenta/{{comenta.id}}">Eliminar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
     </section>

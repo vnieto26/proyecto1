@@ -47,7 +47,7 @@
         </form>
 
         <div class="shopping-cart">
-            
+
             <div class="box">
                 <i class="fas fa-trash"></i>
                 <img src="{{url_for('static', filename='image/cart-img-3.png')}}" alt="">
@@ -66,7 +66,7 @@
             <input type="email" name="email" placeholder="email" class="box" required>
             <input type="password" name="password" placeholder="contraseña" class="box" required>
             <p>Olvidaste tu contraseña <a href="#" id="recuperar-btn"> Clic aquí</a></p>
-            <p >No tengo una cuenta<a href="#" id="register-btn"> Crear ahora</div></a></p>
+            <p>No tengo una cuenta<a href="#" id="register-btn"> Crear ahora</div></a></p>
             <input type="submit" value="Entrar" class="btn">
         </form>
         <!-- Formulario de registro de usuario -->
@@ -140,91 +140,53 @@
 
     <!-- features section ends -->
 
+    <!-- {% for producto in productos %}
+    <div class="swiper product-slider">
+        <h2>{{producto.producto}}</h2>
+        <h4>{{producto.precio}}</h4>
+    </div>
+    {% endfor %} -->
     <!-- products section starts  -->
 
     <section class="products" id="products">
-
-        <h1 class="heading"> Nuestros <span>Productos</span> </h1>
+        <h1 class="heading"> Nuestros <span>Productos</span> </h1>        
+        
 
         <div class="swiper product-slider">
-
             <div class="swiper-wrapper">
-
                 <div class="swiper-slide box" nombre="Naranja">
                     <img src="{{url_for('static', filename='image/product-1.png')}}" alt="">
                     <h3>Naranja fresca</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-2.png')}}" alt="">
                     <h3>Cebolla fresca</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-3.png')}}" alt="">
                     <h3>Carne fresca</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-4.png')}}" alt="">
                     <h3>Repollo fresco</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
-
             </div>
-
         </div>
 
         <div class="swiper product-slider">
-
             <div class="swiper-wrapper">
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-5.png')}}" alt="">
                     <h3>Papa fresca</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
 
@@ -232,13 +194,6 @@
                     <img src="{{url_for('static', filename='image/product-6.png')}}" alt="">
                     <h3>Aguacate fresco</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
 
@@ -246,13 +201,6 @@
                     <img src="{{url_for('static', filename='image/product-7.png')}}" alt="">
                     <h3>Zanahoria fresca</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
 
@@ -260,20 +208,10 @@
                     <img src="{{url_for('static', filename='image/product-8.png')}}" alt="">
                     <h3>Limón</h3>
                     <div class="price"> $4.99/- - 10.99/- </div>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
                     <a href="#" class="btn">Agregar al carrito</a>
                 </div>
-
             </div>
-
         </div>
-
 
     </section>
 

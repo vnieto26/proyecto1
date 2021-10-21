@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, session, escape
 from werkzeug.utils import redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 import os
 
 dbdir = "sqlite:///" + os.path.abspath(os.getcwd()) + "/database.db"
@@ -21,7 +23,7 @@ class Users(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     perfil = db.Column(db.String(1), default='1')
-
+    comentario = db.relationship("Comentarios", backref="users")
 
 class Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,10 +31,21 @@ class Products(db.Model):
     categoria = db.Column(db.String(50), nullable=False)
     precio = db.Column(db.Float, default = 0.0)
     stock = db.Column(db.Integer, default=0)
+    comentario = db.relationship('Comentarios', backref='products')
+
+class Comentarios(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    comentario = db.Column(db.String(300), nullable=False)
+    id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # nom_user = relationship('user', backref='comentarios')
+    id_producto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    # nom_producto = relationship('products', backref='comentarios')
+
 
 @ app.route('/')
 def inicio():
-    return render_template('index.html')
+    productos = Products.query.all()
+    return render_template('index.html', productos=productos)
 
 @ app.route('/buscar')
 def buscar():
@@ -77,7 +90,8 @@ def home():
     if 'username' in session:
         productos = Products.query.all()
         users = Users.query.all()
-        return render_template('home.html', productos=productos, users=users)
+        comentarios = Comentarios.query.all()
+        return render_template('home.html', productos=productos, users=users, comentarios= comentarios)
     return redirect('/')
 
 @ app.route('/logout')
@@ -119,6 +133,19 @@ def delete_user(id):
     db.session.delete(user)
     db.session.commit()
     return redirect('/home')
+
+@app.route('/home/edit_comenta')
+def edit_comenta():
+    return redirect('/home')
+
+@app.route('/home/delete_comenta/<int:id>', methods=["get","post"])
+def delete_comenta(id):
+    user = Users.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect('/home')
+
+
 
 
 if __name__ == '__main__':
