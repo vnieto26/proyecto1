@@ -35,7 +35,11 @@
         </nav>
 
         <div class="icons">
+<<<<<<< HEAD
             <!-- <div class="fas fa-plus" id="register-btn"></div> -->
+=======
+            <div class="fas fa-plus" id="register-btn"></div>
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
             <div class="fas fa-bars" id="menu-btn"></div>
             <div class="fas fa-search" id="search-btn"></div>
             <div class="fas fa-shopping-cart" id="cart-btn"></div>
@@ -71,13 +75,21 @@
 
         </form>
 
+<<<<<<< HEAD
         <!-- <form action="{{ url_for('comentar')}}" class="register-form" method="post">
+=======
+        <form action="{{ url_for('comentar')}}" class="register-form" method="post">
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
             <h3>Comentario</h3>
             <input type="text" name="Comentario" placeholder="Comentario" class="box" required>
             <input type="text" name="id_producto" placeholder="ID Producto" class="box" required>
             <input type="email" name="id_usuario" placeholder="ID Usuario" values="{{session['usercompra']}}" class="box" required>
             <input type="submit" value="Registrar" class="btn">
+<<<<<<< HEAD
         </form> -->
+=======
+        </form>
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
 
     </header>
 
@@ -94,7 +106,11 @@
     <section class="products" id="products">
         <div class="container p-4 mt-4">
             <div class="row">
+<<<<<<< HEAD
 
+=======
+                
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
                 <div class="col">
                     <h2>Listado de Productos</h2>
                     <table class="table table-light">
@@ -115,10 +131,18 @@
                                 <td>{{product.categoria}}</td>
                                 <td>{{product.precio}}</td>
                                 <td>
+<<<<<<< HEAD
                                     <a href="/compra/comentar/{{product.id}}" class="btn btn-default btn-rounded mb-4"
                                         data-toggle="modal" data-target="#modalLoginForm">Comentar</a> |
                                     <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
                                         data-target="#modalLoginForm2"">Comprar</a>
+=======
+                                    <a class="btn btn-warning" href="{{url_for('compra')}}">Comentar</a> |
+                                    <a class="btn btn-danger" href="{{url_for('compra')}}">Comprar</a>
+                                    <!-- <a class="btn btn-warning" href="/compra/comentar/{{product.id}}">Comentar</a> |
+                                    <a class="btn btn-danger" href="/compra/{{product.id}}">Comprar</a> -->
+                                </td>
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
                             </tr>
                             {% endfor %}
 
@@ -131,6 +155,7 @@
     </section>
 
     <!-- review section starts  -->
+<<<<<<< HEAD
     <section class=" review" id="review">
                                         <div class="container p-4 mt-4">
                                             <div class="col">
@@ -168,6 +193,42 @@
                                             </div>
                                         </div>
                 </div>
+=======
+    <section class="review" id="review">
+        <div class="container p-4 mt-4">
+            <div class="col">
+                <h2>Listado de Comentarios</h2>
+                <table class="table table-light">
+                    <thead class="thead-light">
+                        <tr style="text-align: center">
+                            <th>#</th>
+                            <th>Comentario</th>
+                            <th>Usuario</th>
+                            <th>Producto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comenta in comentarios %}
+                        <tr style="text-align: center">
+                            <td>{{comenta.id}}</td>
+                            <td>{{comenta.comentario}}</td>
+                            <td>{{comenta.users.nombre}}</td>
+                            <td>{{comenta.products.producto}}</td>
+                            <td>
+                                <a class="btn btn-warning" href="/compra/edit_comenta/{{comenta.id}}">Editar</a> |
+                                <a onclick="return confirm('¿Desea borrar el producto?')" class="btn btn-danger"
+                                    href="/compra/delete_comenta/{{comenta.id}}">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
     </section>
     <!-- footer section starts  -->
 
@@ -190,7 +251,11 @@
                 <h3>Contacto</h3>
                 <a href="#" class="links"> <i class="fas fa-phone"></i> +123-456-7890 </a>
                 <a href="#" class="links"> <i class="fas fa-phone"></i> +111-222-3333 </a>
+<<<<<<< HEAD
                 <a href="#" class="links"> <i class="fas fa-envelope"></i> grupo383@gmail.com </a>
+=======
+                <a href="#" class="links"> <i class="fas fa-envelope"></i> vnieto26@gmail.com </a>
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
                 <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Cartagena, Colombia - 130014 </a>
             </div>
 
@@ -204,6 +269,17 @@
                 <a href="#" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
             </div>
 
+<<<<<<< HEAD
+=======
+            <!-- <div class="box">
+                <h3>Boletin informativo</h3>
+                <p>suscríbete para recibir las últimas actualizaciones</p>
+                <input type="email" name="email_boletin" placeholder="Tu email" class="email">
+                <input type="submit" value="subscribete" class="btn">
+                <img src="{{url_for('static', filename='image/payment.png')}}" class="payment-img" alt="">
+            </div> -->
+
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
         </div>
 
         <div class="credit"> created by <span> Misión TIC - Grupo 38 </span> | 2021 all rights reserved </div>
@@ -211,6 +287,7 @@
     </section>
 
     <!-- footer section ends -->
+<<<<<<< HEAD
     <!-- Modal Comentar -->
     <form action="{{ url_for('comentar')}}" method="post">
         <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -267,6 +344,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+=======
+
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+>>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
     <!-- custom js file link  -->
     <script src="{{url_for('static', filename='js/script.js') }}"></script>
 
