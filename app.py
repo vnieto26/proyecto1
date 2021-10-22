@@ -79,12 +79,8 @@ def login():
         if user.perfil == '2':
             session['username']=user.nombre
             return redirect(url_for('home'))
-<<<<<<< HEAD
         session['usercompra'] = user.nombre
         session['userid'] = user.id
-=======
-        session['usercompra']= user.nombre
->>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
         return redirect(url_for('compra'))
     return redirect(url_for('inicio'))
 
@@ -153,21 +149,15 @@ def delete_comenta(id):
 @app.route('/compra')
 def compra():
     if 'usercompra' in session:
-<<<<<<< HEAD
         userid = session['userid']
         print('usercompra')
         productos = Products.query.all()
         comentarios = Comentarios.query.filter_by(id_user=userid).all()
         return render_template('compra.html', productos=productos, comentarios=comentarios)
-=======
-        productos = Products.query.all()
-        return render_template('compra.html', productos=productos)
->>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
 
 @app.route('/compra/comentar', methods=["get","post"])
 def comentar():
     if request.method == 'POST':
-<<<<<<< HEAD
         new_comentario=request.form['comentario']
         new_idproducto=request.form['idproducto']
         new_idusuario=request.form['idusuario']
@@ -182,10 +172,7 @@ def del_comenta(id):
     db.session.delete(comentario)
     db.session.commit()
     return redirect(url_for('compra'))
-=======
->>>>>>> 5b43f875403f3732c05d9346c0304f496c5eba2a
 
-        return redirect(url_for('compra'))
 
 if __name__ == '__main__':
     db.create_all()
