@@ -67,11 +67,6 @@
         <form action="{{ url_for('login')}}" class="login-form" method="post">
             <h3>Cerrar Sesión</h3>
             <a href="{{url_for('logout')}}" class="btn">Logout</a>
-            <!-- <input type="email" name="email" placeholder="email" class="box" required>
-            <input type="password" name="password" placeholder="contraseña" class="box" required>
-            <p>Olvidaste tu contraseña <a href="#" id="recuperar-btn"> Clic aquí</a></p>
-            <p >No tengo una cuenta<a href="#" id="register-btn"> Crear ahora</div></a></p> -->
-
         </form>
         <!-- Formulario de registro de usuario -->
         <form action="{{ url_for('signup')}}" class="register-form" method="post">
@@ -83,19 +78,14 @@
             <!-- <input type="repassword" name="repassword_registro" placeholder="Reescribir contraseña" class="box" required> -->
             <input type="submit" value="Registrar" class="btn">
         </form>
-        <!-- Formulario para recuperar la contraseña-->
-        <!-- <form action="" class="recuperar-form">
-            <h3>Recuperar Contraseña</h3>
-            <input type="email" name="email_recuperar" placeholder="email" class="box" required>
-            <input type="submit" value="Recuperar" class="btn">
-        </form> -->
+
 
     </header>
 
     <section class="features">
         <div class="container mt-5">
             <h1>Gestión Tiffany co</h1>
-        </div>    
+        </div>
     </section>
 
     <!-- header section ends -->
@@ -237,30 +227,7 @@
 
     <section class="review" id="review">
         <div class="container p-4 mt-4">
-            <!-- <div class="row">
-                <div class="col-4">
-                    <form method="post" action="/crear_producto" enctype="multipart/form-data">
-                        <div class="card">
-                            <div class="card-header">
-                                Ingresar Comentarios
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Crear Comentario</h5>
-                                <p class="card-text">
-                                <div class="form-group">
-                                    <label for="producto">Comentario:</label>
-                                    <input id="producto" class="form-control" type="textarea" name="producto" required>
-                                </div>
-                                <div class="form-group">
-                                    <input class="btn btn-success" type="submit" value="Agregar">
-                                    <a href="{{url_for('home')}}" class="btn btn-primary">Regresar</a>
-                                </div>
-                                </p>
-                            </div>
-                        </div>
-
-                    </form>
-                </div> -->
+            <div class="row">
                 <div class="col">
                     <h2>Listado de Comentarios</h2>
                     <table class="table table-light">
@@ -344,7 +311,7 @@
 
         </div>
 
-        <div class="credit"> created by <span> vnieto26 </span> | all rights reserved </div>
+        <div class="credit"> created by <span> Misión TIC - Grupo 38 </span> | 2021 all rights reserved </div>
 
     </section>
 

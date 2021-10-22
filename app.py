@@ -1,9 +1,7 @@
-from flask import Flask, render_template, request, session, escape
+from flask import Flask, render_template, request, session, escape, url_for
 from werkzeug.utils import redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
 import os
 
 dbdir = "sqlite:///" + os.path.abspath(os.getcwd()) + "/database.db"
@@ -37,9 +35,7 @@ class Comentarios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comentario = db.Column(db.String(300), nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    # nom_user = relationship('user', backref='comentarios')
     id_producto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
-    # nom_producto = relationship('products', backref='comentarios')
 
 
 @ app.route('/')
@@ -50,10 +46,10 @@ def inicio():
 @ app.route('/buscar')
 def buscar():
     busca=request.args.get('search')
-    user=Users.query.filter_by(email=busca).first()
-    if user:
-        return user.email
-    return 'El usuario no existe'
+    product=Products.query.filter_by(producto=busca).first()
+    if product:
+        return product.producto
+    return redirect(url_for('inicio'))
 
 
 @ app.route('/signup',  methods=["GET", "POST"])
@@ -76,14 +72,17 @@ def signup():
 
 @ app.route('/login',  methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        user=Users.query.filter_by(email=request.form['email']).first()
-        if user and check_password_hash(user.password, request.form['password']):
+    if request.method != 'POST':
+        return redirect(url_for('inicio'))
+    user=Users.query.filter_by(email=request.form['email']).first()
+    if user and check_password_hash(user.password, request.form['password']):
+        if user.perfil == '2':
             session['username']=user.nombre
-            return redirect('/home')
-        return redirect('/')
+            return redirect(url_for('home'))
+        session['usercompra']= user.nombre
+        return redirect(url_for('compra'))
+    return redirect(url_for('inicio'))
 
-    return render_template('index.html')
 
 @ app.route('/home')
 def home():
@@ -145,8 +144,17 @@ def delete_comenta(id):
     db.session.commit()
     return redirect('/home')
 
+@app.route('/compra')
+def compra():
+    if 'usercompra' in session:
+        productos = Products.query.all()
+        return render_template('compra.html', productos=productos)
 
+@app.route('/compra/comentar', methods=["get","post"])
+def comentar():
+    if request.method == 'POST':
 
+        return redirect(url_for('compra'))
 
 if __name__ == '__main__':
     db.create_all()

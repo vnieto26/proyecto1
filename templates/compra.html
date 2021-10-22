@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiffany co</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- header section starts  -->
+
+    <header class="header">
+
+        <a href="{{url_for('compra')}}" class="logo"> <i class="fas fa-shopping-basket"></i> Tiffany co </a>
+
+        <nav class="navbar">
+            <a href="{{url_for('compra')}}">Inicio</a>
+            <a href="#products">Productos</a>
+            <a href="#review">Comentarios</a>
+            <a href="#products">Comprador</a>
+            <a href="{{url_for('compra')}}">{{session['usercompra']}}</a>
+
+        </nav>
+
+        <div class="icons">
+            <div class="fas fa-plus" id="register-btn"></div>
+            <div class="fas fa-bars" id="menu-btn"></div>
+            <div class="fas fa-search" id="search-btn"></div>
+            <div class="fas fa-shopping-cart" id="cart-btn"></div>
+            <div class="fas fa-user" id="login-btn"></div>
+
+
+        </div>
+
+        <form action="{{url_for('buscar')}}" method="get" class="search-form">
+            <input type="search" name="search" id="search-box" placeholder="Buscar aquí...">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+
+        <div class="shopping-cart">
+
+            <div class="box">
+                <i class="fas fa-trash"></i>
+                <img src="{{url_for('static', filename='image/cart-img-3.png')}}" alt="">
+                <div class="content">
+                    <h3>Pollo</h3>
+                    <span class="price">$4.99/-</span>
+                    <span class="quantity">qty : 1</span>
+                </div>
+            </div>
+            <div class="total"> total : $19.69/- </div>
+            <a href="#" class="btn">Comprar</a>
+        </div>
+
+        <!-- Formulario de inicio de sesión-->
+        <form action="{{ url_for('login')}}" class="login-form" method="post">
+            <h3>Cerrar Sesión</h3>
+            <a href="{{url_for('logout')}}" class="btn">Logout</a>
+
+        </form>
+
+        <form action="{{ url_for('comentar')}}" class="register-form" method="post">
+            <h3>Comentario</h3>
+            <input type="text" name="Comentario" placeholder="Comentario" class="box" required>
+            <input type="text" name="id_producto" placeholder="ID Producto" class="box" required>
+            <input type="email" name="id_usuario" placeholder="ID Usuario" values="{{session['usercompra']}}" class="box" required>
+            <input type="submit" value="Registrar" class="btn">
+        </form>
+
+    </header>
+
+    <section class="features">
+        <div class="container mt-5">
+            <h1>Gestión Tiffany co</h1>
+        </div>
+    </section>
+
+    <!-- header section ends -->
+
+    <!-- home section starts  -->
+
+    <section class="products" id="products">
+        <div class="container p-4 mt-4">
+            <div class="row">
+                
+                <div class="col">
+                    <h2>Listado de Productos</h2>
+                    <table class="table table-light">
+                        <thead class="thead-light">
+                            <tr style="text-align: center">
+                                <th>#</th>
+                                <th>Producto</th>
+                                <th>Categoria</th>
+                                <th>Precio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in productos %}
+                            <tr style="text-align: center">
+                                <td>{{product.id}}</td>
+                                <td>{{product.producto}}</td>
+                                <td>{{product.categoria}}</td>
+                                <td>{{product.precio}}</td>
+                                <td>
+                                    <a class="btn btn-warning" href="{{url_for('compra')}}">Comentar</a> |
+                                    <a class="btn btn-danger" href="{{url_for('compra')}}">Comprar</a>
+                                    <!-- <a class="btn btn-warning" href="/compra/comentar/{{product.id}}">Comentar</a> |
+                                    <a class="btn btn-danger" href="/compra/{{product.id}}">Comprar</a> -->
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- review section starts  -->
+    <section class="review" id="review">
+        <div class="container p-4 mt-4">
+            <div class="col">
+                <h2>Listado de Comentarios</h2>
+                <table class="table table-light">
+                    <thead class="thead-light">
+                        <tr style="text-align: center">
+                            <th>#</th>
+                            <th>Comentario</th>
+                            <th>Usuario</th>
+                            <th>Producto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comenta in comentarios %}
+                        <tr style="text-align: center">
+                            <td>{{comenta.id}}</td>
+                            <td>{{comenta.comentario}}</td>
+                            <td>{{comenta.users.nombre}}</td>
+                            <td>{{comenta.products.producto}}</td>
+                            <td>
+                                <a class="btn btn-warning" href="/compra/edit_comenta/{{comenta.id}}">Editar</a> |
+                                <a onclick="return confirm('¿Desea borrar el producto?')" class="btn btn-danger"
+                                    href="/compra/delete_comenta/{{comenta.id}}">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- footer section starts  -->
+
+    <section class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3> Tiffany co <i class="fas fa-shopping-basket"></i> </h3>
+                <p>Productos frescos y orgánicos para ti.</p>
+                <div class="share">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-linkedin"></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>Contacto</h3>
+                <a href="#" class="links"> <i class="fas fa-phone"></i> +123-456-7890 </a>
+                <a href="#" class="links"> <i class="fas fa-phone"></i> +111-222-3333 </a>
+                <a href="#" class="links"> <i class="fas fa-envelope"></i> vnieto26@gmail.com </a>
+                <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Cartagena, Colombia - 130014 </a>
+            </div>
+
+            <div class="box">
+                <h3>Enlaces rápidos</h3>
+                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> Inicio </a>
+                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> Características </a>
+                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> productos </a>
+                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> categorías </a>
+                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> comentarios </a>
+                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
+            </div>
+
+            <!-- <div class="box">
+                <h3>Boletin informativo</h3>
+                <p>suscríbete para recibir las últimas actualizaciones</p>
+                <input type="email" name="email_boletin" placeholder="Tu email" class="email">
+                <input type="submit" value="subscribete" class="btn">
+                <img src="{{url_for('static', filename='image/payment.png')}}" class="payment-img" alt="">
+            </div> -->
+
+        </div>
+
+        <div class="credit"> created by <span> Misión TIC - Grupo 38 </span> | 2021 all rights reserved </div>
+
+    </section>
+
+    <!-- footer section ends -->
+
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <!-- custom js file link  -->
+    <script src="{{url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
