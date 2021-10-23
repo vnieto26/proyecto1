@@ -122,9 +122,17 @@ def crear_producto():
         return redirect(url_for('home'))
     return redirect(url_for('home'))
 
-@app.route('/home/edit_product/<int:id>', methods=["GET", "POST"])
-def edit_product(id):
-    
+@app.route('/home/edit_product', methods=["GET", "POST"])
+def edit_product():
+    if request.method == 'POST':
+        idp = request.form['editprodid']
+        prod=request.form['editproducto']
+        cat=request.form['editcat']
+        pre=request.form['editprecio']
+        stock=request.form['editstock']
+        update_product = Products.query.filter_by(id=idp).update(dict(producto=prod, categoria=cat, precio=pre, stock=stock))
+        db.session.commit()
+        return redirect(url_for('home'))
     return redirect(url_for('home'))
 
 @app.route('/home/delete_product/<int:id>', methods=["get","post"])
@@ -134,8 +142,18 @@ def delete_product(id):
     db.session.commit()
     return redirect(url_for('home'))
 
-@app.route('/home/edit_user')
+@app.route('/home/edit_user', methods=["GET", "POST"])
 def edit_user():
+    if request.method == 'POST':
+        idu = request.form['id']
+        new_nombre=request.form['nombre']
+        new_telefono=request.form['telefono']
+        new_password=generate_password_hash(request.form['password'], method='sha256')
+        new_email=request.form['email']
+        new_perfil=request.form['perfil']
+        new_user=Users.query.filter_by(id=idu).update(dict(nombre=new_nombre, telefono=new_telefono,
+                       email=new_email, password=new_password, perfil=new_perfil))
+        db.session.commit()
     return redirect(url_for('home'))
 
 @app.route('/home/delete_user/<int:id>', methods=["get","post"])
