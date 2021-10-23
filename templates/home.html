@@ -260,7 +260,7 @@
                                 <td>
                                     <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
                                         data-target="#modaledituser{{user.id}}">Editar</a>
-                                    <a onclick="return confirm('¿Desea borrar el producto?')"
+                                    <a onclick="return confirm('¿Desea borrar el usuario?')"
                                         class="btn btn-danger btn-default btn-rounded mb-4"
                                         href="{{url_for('delete_user', id=user.id)}}">Eliminar</a>
 
@@ -381,9 +381,9 @@
                                 <td>{{comenta.users.nombre}}</td>
                                 <td>{{comenta.products.producto}}</td>
                                 <td>
-                                    <a class="btn btn-warning" href="/home/edit_comenta/{{comenta.id}}">Editar</a> |
-                                    <a onclick="return confirm('¿Desea borrar el producto?')" class="btn btn-danger"
-                                        href="/home/delete_comenta/{{comenta.id}}">Eliminar</a>
+                                    <a onclick="return confirm('¿Desea borrar el usuario?')"
+                                        class="btn btn-danger btn-default btn-rounded mb-4"
+                                        href="{{url_for('delete_comenta', id=comenta.id)}}">Eliminar</a>    
                                 </td>
                             </tr>
                             {% endfor %}

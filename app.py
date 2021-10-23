@@ -163,14 +163,10 @@ def delete_user(id):
     db.session.commit()
     return redirect(url_for('home'))
 
-@app.route('/home/edit_comenta')
-def edit_comenta():
-    return redirect(url_for('home'))
-
 @app.route('/home/delete_comenta/<int:id>', methods=["get","post"])
 def delete_comenta(id):
-    user = Users.query.get(id)
-    db.session.delete(user)
+    comentario = Comentarios.query.get(id)
+    db.session.delete(comentario)
     db.session.commit()
     return redirect(url_for('home'))
 
@@ -195,9 +191,16 @@ def comentar():
         return redirect(url_for('compra'))
 
 
-@app.route('/compra/edit_comentar/<int:id>', methods=['get','post'])
-def edit_comentar(id):
+@app.route('/compra/edit_comentar', methods=['get','post'])
+def edit_comentar():
+    if request.method == 'POST':
+        idc = request.form['id']
+        com = request.form['comentario']
+        update_comentario = Comentarios.query.filter_by(id=idc).update(dict(comentario=com))
+        db.session.commit()
+        return redirect(url_for('compra'))
     return redirect(url_for('compra'))
+    
 
 @app.route('/compra/del_comenta/<int:id>', methods=["get","post"])
 def del_comenta(id):
