@@ -30,6 +30,7 @@
             <a href="#products">Productos</a>
             <a href="#usuarios">Usuarios</a>
             <a href="#review">Comentarios</a>
+            <a href="#Products">Administrador</a>
             <a href="{{url_for('home')}}">{{session['username']}}</a>
 
         </nav>
@@ -75,11 +76,8 @@
             <input type="text" name="telefono" placeholder="Teléfono" class="box" required>
             <input type="email" name="email" placeholder="Email" class="box" required>
             <input type="password" name="password" placeholder="Contraseña" class="box" required>
-            <!-- <input type="repassword" name="repassword_registro" placeholder="Reescribir contraseña" class="box" required> -->
             <input type="submit" value="Registrar" class="btn">
         </form>
-
-
     </header>
 
     <section class="features">
@@ -95,8 +93,8 @@
     <section class="products" id="products">
         <div class="container p-4 mt-4">
             <div class="row">
-                <div class="col-4">
-                    <form method="post" action="/crear_producto" enctype="multipart/form-data">
+                <div class="col-3">
+                    <form method="post" action="{{url_for('crear_producto')}}" enctype="multipart/form-data">
                         <div class="card">
                             <div class="card-header">
                                 Ingresar Productos
@@ -122,7 +120,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input class="btn btn-success" type="submit" value="Agregar">
-                                    <a href="{{url_for('home')}}" class="btn btn-primary">Regresar</a>
+
                                 </div>
                                 </p>
                             </div>
@@ -130,7 +128,7 @@
 
                     </form>
                 </div>
-                <div class="col-8">
+                <div class="col-9">
                     <h2>Listado de Productos</h2>
                     <table class="table table-light">
                         <thead class="thead-light">
@@ -152,9 +150,73 @@
                                 <td>{{product.precio}}</td>
                                 <td>{{product.stock}}</td>
                                 <td>
-                                    <a class="btn btn-warning" href="/home/edit_product/{{product.id}}">Editar</a> |
-                                    <a onclick="return confirm('¿Desea borrar el producto?')" class="btn btn-danger"
-                                        href="/home/delete_product/{{product.id}}">Eliminar</a>
+                                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
+                                        data-target="#modaleditproduct{{product.id}}">Editar</a>
+                                    <a onclick="return confirm('¿Desea borrar el producto?')"
+                                        class="btn btn-danger btn-default btn-rounded mb-4"
+                                        href="{{url_for('delete_product', id=product.id)}}">Eliminar</a>
+
+                                    <form action=" {{ url_for('edit_product', id=product.id) }}" method="post">
+                                        <div class="modal fade" id="modaleditproduct{{product.id}}" tabindex="-1"
+                                            role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header text-center">
+                                                        <h4 class="modal-title w-100 font-weight-bold">Editar Producto
+                                                        </h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body mx-3">
+                                                        <div class="md-form mb-4">
+                                                            <div class="md-form mb-4">
+                                                                <input hidden type="number" name="editprodid"
+                                                                    value="{{product.id}}" class="form-control"
+                                                                    id="defaultForm-3" class="form-control validate"
+                                                                    required>
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right"
+                                                                    for="defaultForm-number">Producto</label>
+                                                                <input type="text" name="editproducto"
+                                                                    value="{{product.producto}}" class="form-control"
+                                                                    id="defaultForm-3" class="form-control validate"
+                                                                    required>
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right"
+                                                                    for="defaultForm-number">Categoría</label>
+                                                                <input type="text" name="editcat"
+                                                                    value="{{product.categoria}}" class="form-control"
+                                                                    id="defaultForm-3" class="form-control validate"
+                                                                    required>
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right"
+                                                                    for="defaultForm-number">Precio</label>
+                                                                <input type="number" name="editprecio"
+                                                                    value="{{product.precio}}" class="form-control"
+                                                                    id="defaultForm-3" class="form-control validate"
+                                                                    required>
+
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right"
+                                                                    for="defaultForm-number">Stock</label>
+                                                                <input type="number" name="editstock"
+                                                                    value="{{product.stock}}" id="defaultForm-3"
+                                                                    class="form-control validate" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer d-flex justify-content-center">
+                                                            <button class="btn btn-default">Actualizar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </form>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -316,7 +378,15 @@
     </section>
 
     <!-- footer section ends -->
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 

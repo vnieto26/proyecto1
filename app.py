@@ -22,6 +22,7 @@ class Users(db.Model):
     password = db.Column(db.String(80), nullable=False)
     perfil = db.Column(db.String(1), default='1')
     comentario = db.relationship("Comentarios", backref="users")
+    compra = db.relationship('Compras', backref='users')
 
 class Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -30,12 +31,20 @@ class Products(db.Model):
     precio = db.Column(db.Float, default = 0.0)
     stock = db.Column(db.Integer, default=0)
     comentario = db.relationship('Comentarios', backref='products')
+    compra = db.relationship('Compras', backref='products')
 
 class Comentarios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comentario = db.Column(db.String(300), nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     id_producto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+
+class Compras(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    idProducto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+    cantidad = db.Column(db.Integer, default=1)
+    formapago = db.Column(db.String(50), nullable=False)
+    idUsuario = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
 @ app.route('/')
@@ -113,8 +122,9 @@ def crear_producto():
         return redirect(url_for('home'))
     return redirect(url_for('home'))
 
-@app.route('/home/edit_product')
-def edit_product():
+@app.route('/home/edit_product/<int:id>', methods=["GET", "POST"])
+def edit_product(id):
+    
     return redirect(url_for('home'))
 
 @app.route('/home/delete_product/<int:id>', methods=["get","post"])
@@ -166,6 +176,11 @@ def comentar():
         db.session.commit()
         return redirect(url_for('compra'))
 
+
+@app.route('/compra/edit_comentar/<int:id>', methods=['get','post'])
+def edit_comentar(id):
+    return redirect(url_for('compra'))
+
 @app.route('/compra/del_comenta/<int:id>', methods=["get","post"])
 def del_comenta(id):
     comentario = Comentarios.query.get(id)
@@ -173,6 +188,10 @@ def del_comenta(id):
     db.session.commit()
     return redirect(url_for('compra'))
 
+
+@app.route('/compra/carrito')
+def carrito():
+    return redirect(url_for('compra'))
 
 if __name__ == '__main__':
     db.create_all()
