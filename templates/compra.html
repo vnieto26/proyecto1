@@ -22,14 +22,14 @@
             <a href="{{url_for('compra')}}">Inicio</a>
             <a href="#products">Productos</a>
             <a href="#review">Comentarios</a>
-            <a href="#products">Comprador</a>
-            <a href="#{{url_for('compra')}}">{{session['usercompra']}}</a>
+            <a href="#products">Usuario</a>
+            <a href="{{url_for('compra')}}">{{session['usercompra']}}</a>
         </nav>
         <div class="icons">
             <!-- <div class="fas fa-plus" id="register-btn"></div> -->
             <div class="fas fa-bars" id="menu-btn"></div>
             <div class="fas fa-search" id="search-btn"></div>
-            <div class="fas fa-shopping-cart" id="cart-btn"></div>
+            <div class="fas fa-shopping-cart" id="cart-btn">({{session['Carritocompra']|length}})</div>
             <div class="fas fa-user" id="login-btn"></div>
         </div>
 
@@ -41,16 +41,46 @@
         <div class="shopping-cart">
 
             <div class="box">
-                <i class="fas fa-trash"></i>
-                <img src="{{url_for('static', filename='image/cart-img-3.png')}}" alt="">
-                <div class="content">
-                    <h3>Pollo</h3>
-                    <span class="price">$4.99/-</span>
-                    <span class="quantity">qty : 1</span>
+                <div class="container p-4 mt-4">
+                    <div class="row">
+                        <h2>Carrito de Compras</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Id</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Valor</th>
+                                <th>Subtotal</th>
+                                <th>Borrar</th>
+                            </thead>
+                            <tbody>
+                                {% if 'Carritocompra' in session%}
+                                {% for key, product in session['Carritocompra'].items() %}
+                                <tr>
+                                    <td>{{loop.index}}</td>
+                                    <td>{{product.nombre}}</td>
+                                    <td style="text-align: center">{{product.cantidad}}</td>
+                                    <td>{{product.precio}}</td>
+                                    {% set subtotal = product.cantidad|int * product.precio|float %}
+                                    <td>{{"%0.2f"|format(subtotal)}}</td>
+                                    <td><a href="{{url_for('deleteitem', id=key)}}" class="btn btn-danger">Borrar</a></td>
+                                </tr>
+                                {% endfor %}
+                                {% endif %}
+                                <tr>
+                                    <td colspan="2"><a href="{{url_for('compra')}}">Verificar</a></td>
+                                    <td colspan="3">Total compra: {{grantotal}}</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="{{url_for('clearcart')}}" class="btn btn-danger">Vaciar Carrito</a>
+                    </div>
+                
                 </div>
             </div>
-            <div class="total"> total : $19.69/- </div>
-            <a href="#" class="btn">Comprar</a>
+
+            <a href="#" class="btn btn-default btn-rounded mb-4">Comprar</a>
         </div>
 
         <!-- Formulario de inicio de sesión-->
@@ -62,8 +92,9 @@
     </header>
 
     <section class="features">
+
         <div class="container mt-5">
-            <h1>Gestión Tiffany co</h1>
+            
         </div>
     </section>
     <!-- header section ends -->
@@ -141,7 +172,7 @@
                                                 </div>
                                             </div>
                                             </form>
-                                            <form action=" {{ url_for('compra')}}" method="post">
+                                            <form action=" {{ url_for('addcar')}}" method="post">
                                                 <div class="modal fade" id="modalcarrito{{product.id}}" tabindex="-1"
                                                     role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
@@ -155,13 +186,13 @@
                                                             <div class="modal-body mx-3">
                                                                 <div class="md-form mb-4">
                                                                     <div class="md-form mb-4">
-                                                                        <input hidden type="number" name="caridprod"
+                                                                        <input hidden type="number" name="idp"
                                                                             value="{{product.id}}" class="form-control"
                                                                             id="defaultForm-3"
                                                                             class="form-control validate" required>
                                                                     </div>
                                                                     <div class="md-form mb-4">
-                                                                        <input readonly type="text" name="carprod"
+                                                                        <input readonly type="text" name="prod"
                                                                             value="{{product.producto}}"
                                                                             class="form-control" id="defaultForm-3"
                                                                             class="form-control validate" required>
@@ -169,21 +200,27 @@
                                                                             for="defaultForm-number">Producto</label>
                                                                     </div>
                                                                     <div class="md-form mb-4">
-                                                                        <input type="number" name="carcantidad"
+                                                                        <input type="number" name="cantidad"
                                                                             class="form-control" id="defaultForm-3"
                                                                             class="form-control validate" required>
                                                                         <label data-error="wrong" data-success="right"
                                                                             for="defaultForm-number">Cantidad</label>
                                                                     </div>
                                                                     <div class="md-form mb-4">
-                                                                        <input type="text" name="carformapago"
+                                                                        <label data-error="wrong" data-success="right" for="defaultForm-number">Forma de Pago</label>
+                                                                        <select name="formap" id="">
+                                                                            <option value="Efectivo">Efectivo</option>
+                                                                            <option value="Tarjeta Credito">Tarjeta de Crédito</option>
+                                                                            <option value="PSE">PSE</option>
+                                                                            <option value="Otro">Otro</option>
+                                                                        </select>
+                                                                        <!-- <input type="text" name="formap"
                                                                             class="form-control" id="defaultForm-3"
-                                                                            class="form-control validate" required>
-                                                                        <label data-error="wrong" data-success="right"
-                                                                            for="defaultForm-number">Forma de Pago</label>
+                                                                            class="form-control validate" required> -->
+                                                                        
                                                                     </div>
                                                                     <div class="md-form mb-4">
-                                                                        <input hidden type="number" name="idusuario"
+                                                                        <input hidden type="number" name="idu"
                                                                             value="{{session['userid']}}"
                                                                             id="defaultForm-3"
                                                                             class="form-control validate" required>

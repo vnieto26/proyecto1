@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, escape, url_for
+from flask import Flask, render_template, request, session, url_for, flash, current_app
 from werkzeug.utils import redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -107,6 +107,7 @@ def home():
 @ app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('Carritocompra', None)
     return redirect(url_for('inicio'))
 
 @app.route('/crear_producto',  methods=["GET", "POST"])
@@ -130,7 +131,7 @@ def edit_product():
         cat=request.form['editcat']
         pre=request.form['editprecio']
         stock=request.form['editstock']
-        update_product = Products.query.filter_by(id=idp).update(dict(producto=prod, categoria=cat, precio=pre, stock=stock))
+        Products.query.filter_by(id=idp).update(dict(producto=prod, categoria=cat, precio=pre, stock=stock))
         db.session.commit()
         return redirect(url_for('home'))
     return redirect(url_for('home'))
@@ -151,7 +152,7 @@ def edit_user():
         new_password=generate_password_hash(request.form['password'], method='sha256')
         new_email=request.form['email']
         new_perfil=request.form['perfil']
-        new_user=Users.query.filter_by(id=idu).update(dict(nombre=new_nombre, telefono=new_telefono,
+        Users.query.filter_by(id=idu).update(dict(nombre=new_nombre, telefono=new_telefono,
                        email=new_email, password=new_password, perfil=new_perfil))
         db.session.commit()
     return redirect(url_for('home'))
@@ -174,9 +175,10 @@ def delete_comenta(id):
 def compra():
     if 'usercompra' in session:
         userid = session['userid']
-        print('usercompra')
+        getCart()
         productos = Products.query.all()
         comentarios = Comentarios.query.filter_by(id_user=userid).all()
+    
         return render_template('compra.html', productos=productos, comentarios=comentarios)
 
 @app.route('/compra/comentar', methods=["get","post"])
@@ -196,7 +198,7 @@ def edit_comentar():
     if request.method == 'POST':
         idc = request.form['id']
         com = request.form['comentario']
-        update_comentario = Comentarios.query.filter_by(id=idc).update(dict(comentario=com))
+        Comentarios.query.filter_by(id=idc).update(dict(comentario=com))
         db.session.commit()
         return redirect(url_for('compra'))
     return redirect(url_for('compra'))
@@ -209,10 +211,77 @@ def del_comenta(id):
     db.session.commit()
     return redirect(url_for('compra'))
 
+# Carrito de Compra
+def MagerDicts(dict1, dict2):
+    if isinstance(dict1, list) and isinstance(dict2, list):
+        return dict1 + dict2
+    elif isinstance(dict1, dict) and isinstance(dict2, dict):
+        return dict(list(dict1.items()) + list(dict2.items()))
+    return False
 
-@app.route('/compra/carrito')
-def carrito():
-    return redirect(url_for('compra'))
+
+@app.route('/compra/addcar', methods=["post"])
+def addcar():
+    try:
+        idp = request.form['idp']
+        prod = request.form['prod']
+        cantidad = request.form['cantidad']
+        formap = request.form['formap']
+        idu = request.form['idu']
+        product = Products.query.filter_by(id=idp).first()
+        if idp and prod and cantidad and formap and idu and request.method == "POST":
+            DictItems = {idp:{'nombre':product.producto, 'precio': product.precio, 
+            'cantidad': cantidad, 'formap': formap, 'id_user': idu}}
+            if 'Carritocompra' in session:
+                print(session['Carritocompra'])
+                if idp in session['Carritocompra']:
+                    for key, item in session['Carritocompra'].items():
+                        if int(key) == int(idp):
+                            session.modified = True
+                            item['cantidad'] += 1
+                else:
+                    session['Carritocompra'] = MagerDicts(session['Carritocompra'], DictItems)
+                    return redirect(request.referrer)
+            else:
+                session['Carritocompra'] = DictItems
+                return redirect(request.referrer)
+    except Exception as e:
+        print(e)
+    finally:
+        return redirect(request.referrer)
+    
+@app.route('/compra/carts')
+def getCart():
+    if 'Carritocompra' not in session or len(session['Carritocompra'])<= 0:
+        return redirect(url_for('compra'))
+    grantotal = sum(
+        float(prod['precio']) * int(prod['cantidad'])
+        for key, prod in session['Carritocompra'].items()
+    )
+    print(grantotal)
+    return redirect(url_for('compra', grantotal=grantotal))
+
+@app.route('/compra/deleteitem/<int:id>')
+def deleteitem(id):
+    if 'Carritocompra' not in session:
+        return redirect(url_for('compra'))
+    try:
+        session.modified= True
+        for key, item in session['Carritocompra'].items():
+            if int(key)== id:
+                session['Carritocompra'].pop(key, None)
+                return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
+        return redirect(url_for('compra'))
+
+@app.route('/compra/clearcart')
+def clearcart():
+    try:
+        session.pop('Carritocompra', None)
+        return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
 
 if __name__ == '__main__':
     db.create_all()
