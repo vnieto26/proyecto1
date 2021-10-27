@@ -25,7 +25,8 @@
             <a href="{{url_for('home')}}">Inicio</a>
             <a href="#products">Productos</a>
             <a href="#usuarios">Usuarios</a>
-            <a href="#review">Comentarios</a>
+            <a href="#comentarios">Comentarios</a>
+            <a href="#deseos">Lista Deseos</a>
             <a href="#Products">Administrador</a>
             <a href="{{url_for('home')}}">{{session['username']}}</a>
         </nav>
@@ -80,7 +81,7 @@
     <!-- header section ends -->
 
     <!-- home section starts  -->
-    <section class="products" id="products">
+    <section id="productos">
         <div class="container p-4 mt-4">
             <div class="row">
                 <div class="col-3">
@@ -92,26 +93,26 @@
                             <div class="card-body">
                                 <h5 class="card-title">Crear Producto</h5>
                                 <p class="card-text">
-                                <div class="form-group">
-                                    <label for="producto">Nombre del producto:</label>
-                                    <input id="producto" class="form-control" type="text" name="producto" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="categoria">Categoria:</label>
-                                    <input id="categoria" class="form-control" type="text" name="categoria" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="precio">Precio:</label>
-                                    <input id="precio" class="form-control" type="number" name="precio" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="stock">Stock:</label>
-                                    <input id="stock" class="form-control" type="text" name="stock" required>
-                                </div>
-                                <div class="form-group">
-                                    <input class="btn btn-success" type="submit" value="Agregar">
+                                    <div class="form-group">
+                                        <label for="producto">Nombre del producto:</label>
+                                        <input id="producto" class="form-control" type="text" name="producto" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="categoria">Categoria:</label>
+                                        <input id="categoria" class="form-control" type="text" name="categoria" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="precio">Precio:</label>
+                                        <input id="precio" class="form-control" type="number" name="precio" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="stock">Stock:</label>
+                                        <input id="stock" class="form-control" type="text" name="stock" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="btn btn-success" type="submit" value="Agregar">
 
-                                </div>
+                                    </div>
                                 </p>
                             </div>
                         </div>
@@ -120,10 +121,10 @@
                 </div>
                 <div class="col-9">
                     <h2>Listado de Productos</h2>
-                    <table class="table table-light">
+                    <table class="table table-striped">
                         <thead class="thead-light">
                             <tr style="text-align: center">
-                                <th>#</th>
+                                <th>Itém</th>
                                 <th>Producto</th>
                                 <th>Categoria</th>
                                 <th>Precio</th>
@@ -134,70 +135,47 @@
                         <tbody>
                             {% for product in productos %}
                             <tr>
-                                <td>{{product.id}}</td>
+                                <td class="text-center">{{loop.index}}</td>
                                 <td>{{product.producto}}</td>
                                 <td>{{product.categoria}}</td>
                                 <td>{{product.precio}}</td>
                                 <td>{{product.stock}}</td>
-                                <td>
-                                    <a href="" class="btn btn-outline-info sm-4" data-toggle="modal"
-                                        data-target="#modaleditproduct{{product.id}}">Editar</a>
-                                    <a onclick="return confirm('¿Desea borrar el producto?')"
-                                        class="btn btn-outline-danger sm-4"
-                                        href="{{url_for('delete_product', id=product.id)}}">Eliminar</a>
+                                <td class="text-center">
+                                    <a href="" class="btn btn-outline-info sm-4" data-toggle="modal" data-target="#modaleditproduct{{product.id}}">Editar</a>
+                                    <a onclick="return confirm('¿Desea borrar el producto?')" class="btn btn-outline-danger sm-4" href="{{url_for('delete_product', id=product.id)}}">Eliminar</a>
 
                                     <form action=" {{ url_for('edit_product', id=product.id) }}" method="post">
-                                        <div class="modal fade" id="modaleditproduct{{product.id}}" tabindex="-1"
-                                            role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="modaleditproduct{{product.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header text-center">
                                                         <h4 class="modal-title w-100 font-weight-bold">Editar Producto
                                                         </h4>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body mx-3">
                                                         <div class="md-form mb-4">
                                                             <div class="md-form mb-4">
-                                                                <input hidden type="number" name="editprodid"
-                                                                    value="{{product.id}}" class="form-control"
-                                                                    id="defaultForm-3" class="form-control validate"
-                                                                    required>
+                                                                <input hidden type="number" name="editprodid" value="{{product.id}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
-                                                                <label data-error="wrong" data-success="right"
-                                                                    for="defaultForm-number">Producto</label>
-                                                                <input type="text" name="editproducto"
-                                                                    value="{{product.producto}}" class="form-control"
-                                                                    id="defaultForm-3" class="form-control validate"
-                                                                    required>
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Producto</label>
+                                                                <input type="text" name="editproducto" value="{{product.producto}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
-                                                                <label data-error="wrong" data-success="right"
-                                                                    for="defaultForm-number">Categoría</label>
-                                                                <input type="text" name="editcat"
-                                                                    value="{{product.categoria}}" class="form-control"
-                                                                    id="defaultForm-3" class="form-control validate"
-                                                                    required>
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Categoría</label>
+                                                                <input type="text" name="editcat" value="{{product.categoria}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
-                                                                <label data-error="wrong" data-success="right"
-                                                                    for="defaultForm-number">Precio</label>
-                                                                <input type="number" name="editprecio"
-                                                                    value="{{product.precio}}" class="form-control"
-                                                                    id="defaultForm-3" class="form-control validate"
-                                                                    required>
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Precio</label>
+                                                                <input type="number" name="editprecio" value="{{product.precio}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
 
                                                             </div>
                                                             <div class="md-form mb-4">
-                                                                <label data-error="wrong" data-success="right"
-                                                                    for="defaultForm-number">Stock</label>
-                                                                <input type="number" name="editstock"
-                                                                    value="{{product.stock}}" id="defaultForm-3"
-                                                                    class="form-control validate" required>
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Stock</label>
+                                                                <input type="number" name="editstock" value="{{product.stock}}" id="defaultForm-3" class="form-control validate" required>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer d-flex justify-content-center">
@@ -213,9 +191,9 @@
 
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
     </section>
 
@@ -228,10 +206,10 @@
             <div class="row">
                 <div class="col">
                     <h1>Listado de Usuarios</h1>
-                    <table class="table table-light">
+                    <table class="table table-striped">
                         <thead class="thead-light">
                             <tr style="text-align: center">
-                                <th>#</th>
+                                <th>Itém</th>
                                 <th>Nombre</th>
                                 <th>Teléfono</th>
                                 <th>Correo</th>
@@ -242,138 +220,99 @@
                         <tbody>
                             {% for user in users %}
                             <tr>
-                                <td>{{user.id}}</td>
+                                <td class="text-center">{{loop.index}}</td>
                                 <td>{{user.nombre}}</td>
                                 <td>{{user.telefono}}</td>
                                 <td>{{user.email}}</td>
-                                <td>{{user.perfil}}</td>
-                                <td>
-                                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
-                                        data-target="#modaledituser{{user.id}}">Editar</a>
-                                    <a onclick="return confirm('¿Desea borrar el usuario?')"
-                                        class="btn btn-danger btn-default btn-rounded mb-4"
-                                        href="{{url_for('delete_user', id=user.id)}}">Eliminar</a>
+                                <td class="text-center">{{user.perfil}}</td>
+                                <td class="text-center">
+                                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modaledituser{{user.id}}">Editar</a>
+                                    <a onclick="return confirm('¿Desea borrar el usuario?')" class="btn btn-danger btn-default btn-rounded mb-4" href="{{url_for('delete_user', id=user.id)}}">Eliminar</a>
 
-                                        <form action=" {{ url_for('edit_user', id=user.id) }}" method="post">
-                                            <div class="modal fade" id="modaledituser{{user.id}}" tabindex="-1"
-                                                role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header text-center">
-                                                            <h4 class="modal-title w-100 font-weight-bold">Editar Usuario
-                                                            </h4>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
+                                    <form action=" {{ url_for('edit_user', id=user.id) }}" method="post">
+                                        <div class="modal fade" id="modaledituser{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header text-center">
+                                                        <h4 class="modal-title w-100 font-weight-bold">Editar Usuario
+                                                        </h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
-                                                        </div>
-                                                        <div class="modal-body mx-3">
+                                                    </div>
+                                                    <div class="modal-body mx-3">
+                                                        <div class="md-form mb-4">
                                                             <div class="md-form mb-4">
-                                                                <div class="md-form mb-4">
-                                                                    <input hidden type="number" name="id"
-                                                                        value="{{user.id}}" class="form-control"
-                                                                        id="defaultForm-3" class="form-control validate"
-                                                                        required>
-                                                                </div>
-                                                                <div class="md-form mb-4">
-                                                                    <label data-error="wrong" data-success="right"
-                                                                        for="defaultForm-number">Nombre</label>
-                                                                    <input type="text" name="nombre"
-                                                                        value="{{user.nombre}}" class="form-control"
-                                                                        id="defaultForm-3" class="form-control validate"
-                                                                        required>
-                                                                </div>
-                                                                <div class="md-form mb-4">
-                                                                    <label data-error="wrong" data-success="right"
-                                                                        for="defaultForm-number">Teléfono</label>
-                                                                    <input type="text" name="telefono"
-                                                                        value="{{user.telefono}}" class="form-control"
-                                                                        id="defaultForm-3" class="form-control validate"
-                                                                        required>
-                                                                </div>
-                                                                <div class="md-form mb-4">
-                                                                    <label data-error="wrong" data-success="right"
-                                                                        for="defaultForm-number">Email</label>
-                                                                    <input type="text" name="email"
-                                                                        value="{{user.email}}" class="form-control"
-                                                                        id="defaultForm-3" class="form-control validate"
-                                                                        required>
-                                                                </div>
-                                                                <div class="md-form mb-4">
-                                                                    <label data-error="wrong" data-success="right"
-                                                                        for="defaultForm-number">Contraseña</label>
-                                                                    <input type="text" name="password"
-                                                                        value="" class="form-control"
-                                                                        id="defaultForm-3" class="form-control validate"
-                                                                        required>
-                                                                </div>
-                                                                <div class="md-form mb-4">
-                                                                    <label data-error="wrong" data-success="right"
-                                                                        for="defaultForm-number">Perfil</label>
-                                                                    <input type="number" name="perfil"
-                                                                        value="{{user.perfil}}" id="defaultForm-3"
-                                                                        class="form-control validate" required>
-                                                                </div>
+                                                                <input hidden type="number" name="id" value="{{user.id}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
                                                             </div>
-                                                            <div class="modal-footer d-flex justify-content-center">
-                                                                <button class="btn btn-default">Actualizar</button>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Nombre</label>
+                                                                <input type="text" name="nombre" value="{{user.nombre}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
                                                             </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Teléfono</label>
+                                                                <input type="text" name="telefono" value="{{user.telefono}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Email</label>
+                                                                <input type="text" name="email" value="{{user.email}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Contraseña</label>
+                                                                <input type="text" name="password" value="" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                            </div>
+                                                            <div class="md-form mb-4">
+                                                                <label data-error="wrong" data-success="right" for="defaultForm-number">Perfil</label>
+                                                                <input type="number" name="perfil" value="{{user.perfil}}" id="defaultForm-3" class="form-control validate" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer d-flex justify-content-center">
+                                                            <button class="btn btn-default">Actualizar</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </form>
+                                            </div>
+                                    </form>
                                 </td>
                             </tr>
                             {% endfor %}
 
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
     </section>
 
     <!-- features section ends -->
 
-    <!-- products section starts  -->
-
-    <section class="review" id="review">
-
-
-
-    </section>
-
-    <!-- categories section ends -->
-
     <!-- review section starts  -->
 
-    <section class="review" id="review">
-        <div class="container p-4 mt-4">
+    <section id="comentarios">
+        <div class="container">
             <div class="row">
                 <div class="col">
                     <h2>Listado de Comentarios</h2>
-                    <table class="table table-light">
+                    <table class="table table-striped">
                         <thead class="thead-light">
                             <tr style="text-align: center">
-                                <th>#</th>
-                                <th>Comentario</th>
+                                <th>Itém</th>
                                 <th>Usuario</th>
-                                <th>Producto</th>
-                                <th>Acciones</th>
+                                <th class="text-center">Producto</th>
+                                <th class="text-center">Comentario</th>
+                                <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for comenta in comentarios %}
                             <tr>
-                                <td>{{comenta.id}}</td>
-                                <td>{{comenta.comentario}}</td>
+                                <td class="text-center">{{loop.index}}</td>
                                 <td>{{comenta.users.nombre}}</td>
                                 <td>{{comenta.products.producto}}</td>
-                                <td>
-                                    <a onclick="return confirm('¿Desea borrar el usuario?')"
-                                        class="btn btn-danger btn-default btn-rounded mb-4"
-                                        href="{{url_for('delete_comenta', id=comenta.id)}}">Eliminar</a>    
+                                <td>{{comenta.comentario}}</td>
+                                <td class="text-center">
+                                    <a onclick="return confirm('¿Desea borrar el usuario?')" class="btn btn-danger btn-default btn-rounded mb-4" href="{{url_for('delete_comenta', id=comenta.id)}}">Eliminar</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -383,76 +322,86 @@
                 </div>
             </div>
         </div>
-
-
     </section>
 
+    <section id="deseos">
+
+        <div class="container p-4 m-4">
+            <div class="row">
+                <div class="col">
+                    <h2>Listado de Deseos</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Itém</th>
+                                    <th class="text-center">Usuario</th>
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ldeseo in ldeseos %}
+                                <tr>
+                                    <td class="text-center">{{loop.index}}</td>
+                                    <td>{{ldeseo.users.nombre}}</td>
+                                    <td>{{ldeseo.products.producto}}</td>
+                                    <td align="center"><a onclick=" return confirm( '¿Desea borrar el itém?') " class="btn btn-outline-danger btn-sm " href="{{url_for( 'del_ldeseo', id=ldeseo.id)}} ">Eliminar</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div class="col ">
+            </div>
+        </div>
+
+    </section>
 
 
     <!-- footer section starts  -->
-
-    <section class="footer">
-
-        <div class="box-container">
-
-            <div class="box">
-                <h3> Tiffany co <i class="fas fa-shopping-basket"></i> </h3>
+    <section class="footer ">
+        <div class="box-container ">
+            <div class="box ">
+                <h3> Tiffany Co. <i class="fas fa-shopping-basket "></i> </h3>
                 <p>Productos frescos y orgánicos para ti.</p>
-                <div class="share">
-                    <a href="#" class="fab fa-facebook-f"></a>
-                    <a href="#" class="fab fa-twitter"></a>
-                    <a href="#" class="fab fa-instagram"></a>
-                    <a href="#" class="fab fa-linkedin"></a>
+                <div class="share ">
+                    <a href="# " class="fab fa-facebook-f "></a>
+                    <a href="# " class="fab fa-twitter "></a>
+                    <a href="# " class="fab fa-instagram "></a>
+                    <a href="# " class="fab fa-linkedin "></a>
                 </div>
             </div>
 
-            <div class="box">
+            <div class="box ">
                 <h3>Contacto</h3>
-                <a href="#" class="links"> <i class="fas fa-phone"></i> +123-456-7890 </a>
-                <a href="#" class="links"> <i class="fas fa-phone"></i> +111-222-3333 </a>
-                <a href="#" class="links"> <i class="fas fa-envelope"></i> grupo383@gmail.com </a>
-                <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Cartagena, Colombia - 130014 </a>
+                <a href="# " class="links "> <i class="fas fa-phone "></i> +123-456-7890 </a>
+                <a href="# " class="links "> <i class="fas fa-phone "></i> +111-222-3333 </a>
+                <a href="# " class="links "> <i class="fas fa-envelope "></i> grupo383@gmail.com </a>
+                <a href="# " class="links "> <i class="fas fa-map-marker-alt "></i> Colombia </a>
             </div>
 
-            <div class="box">
-                <h3>Enlaces rápidos</h3>
-                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> Inicio </a>
-                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> Características </a>
-                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> productos </a>
-                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> categorías </a>
-                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> comentarios </a>
-                <a href="#" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
+            <div class="box ">
+                <h3>Boletín Informativo </h3>
+                <p>Suscríbete para recibir novedades sobre nuestras ofertas</p>
+                <input type="email " name="email_boletin " placeholder="Tu E-mail " class="email ">
+                <input type="submit " value="¡Subscribete! " class="btn ">
+                <img src="{{url_for( 'static', filename='image/payment.png' )}} " class="payment-img " alt=" ">
             </div>
-
-            <div class="box">
-                <h3>Boletin informativo</h3>
-                <p>suscríbete para recibir las últimas actualizaciones</p>
-                <input type="email" name="email_boletin" placeholder="Tu email" class="email">
-                <input type="submit" value="subscribete" class="btn">
-                <img src="{{url_for('static', filename='image/payment.png')}}" class="payment-img" alt="">
-            </div>
-
         </div>
-
-        <div class="credit"> created by <span> Misión TIC - Grupo 38 </span> | 2021 all rights reserved </div>
-
+        <div class="credit "> Copyright 2021 - <span> Misión TIC 2022 | Equipo 3 - Grupo 38 | UNINORTE</span> - All rights reserved </div>
     </section>
 
     <!-- footer section ends -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
 
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js "></script>
 
     <!-- custom js file link  -->
-    <script src="{{url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{url_for( 'static', filename='js/script.js' ) }} "></script>
 
 </body>
 

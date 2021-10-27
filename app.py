@@ -13,7 +13,7 @@ db = SQLAlchemy(app)
 
 app.secret_key = "1a2b3c4d5e6f7g8h9i"
 
-
+#Modelos Bases de datos
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(150), nullable=False)
@@ -23,6 +23,7 @@ class Users(db.Model):
     perfil = db.Column(db.String(1), default='1')
     comentario = db.relationship("Comentarios", backref="users")
     compra = db.relationship('Compras', backref='users')
+    deseo = db.relationship('ListaDeseos', backref='users')
 
 class Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +33,7 @@ class Products(db.Model):
     stock = db.Column(db.Integer, default=0)
     comentario = db.relationship('Comentarios', backref='products')
     compra = db.relationship('Compras', backref='products')
+    deseo = db.relationship('ListaDeseos', backref='products')
 
 class Comentarios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,6 +49,13 @@ class Compras(db.Model):
     idUsuario = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
+class ListaDeseos(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    id_producto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
+
+
+# Rutas
 @ app.route('/')
 def inicio():
     productos = Products.query.all()
@@ -96,7 +105,8 @@ def home():
         productos = Products.query.all()
         users = Users.query.all()
         comentarios = Comentarios.query.all()
-        return render_template('home.html', productos=productos, users=users, comentarios= comentarios)
+        ldeseos = ListaDeseos.query.all()
+        return render_template('home.html', productos=productos, users=users, comentarios= comentarios, ldeseos=ldeseos)
     return redirect(url_for('inicio'))
 
 
@@ -194,12 +204,12 @@ def compra():
     try:
         if 'usercompra' in session:
             userid = session['userid']
-            getCart()
             productos = Products.query.all()
             comentarios = Comentarios.query.filter_by(id_user=userid).all()
+            ldeseos = ListaDeseos.query.filter_by(id_user=userid).all()
     except Exception as e:
         print(e)
-    return render_template('compra.html', productos=productos, comentarios=comentarios)
+    return render_template('compra.html', productos=productos, comentarios=comentarios, ldeseos= ldeseos)
 
 @app.route('/compra/comentar', methods=["get","post"])
 def comentar():
@@ -315,6 +325,34 @@ def clearcart():
         return redirect(url_for('compra'))
     except Exception as e:
         print(e)
+
+
+@app.route('/compra/addldeseo', methods=["get","post"])
+def addldeseo():
+    try:
+        if request.method == 'POST':
+            new_idproducto=request.form['idproducto']
+            new_idusuario=request.form['idusuario']
+            new_ldeseo = ListaDeseos(id_user=new_idusuario, id_producto=new_idproducto)
+            db.session.add(new_ldeseo)
+            db.session.commit()
+            return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
+    return redirect(url_for('compra'))
+
+
+@app.route('/compra/del_ldeseo/<int:id>', methods=["get","post"])
+def del_ldeseo(id):
+    try:
+        ldeseo = ListaDeseos.query.get(id)
+        db.session.delete(ldeseo)
+        db.session.commit()
+        return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
+    return redirect(url_for('compra'))
+
 
 if __name__ == '__main__':
     db.create_all()
