@@ -52,45 +52,41 @@ def inicio():
     productos = Products.query.all()
     return render_template('index.html', productos=productos)
 
-@ app.route('/buscar')
-def buscar():
-    busca=request.args.get('search')
-    product=Products.query.filter_by(producto=busca).first()
-    if product:
-        return product.producto
-    return redirect(url_for('inicio'))
-
 
 @ app.route('/signup',  methods=["GET", "POST"])
 def signup():
-    if request.method == 'POST':
-        new_nombre=request.form['nombre']
-        new_telefono=request.form['telefono']
-        new_password=generate_password_hash(
-            request.form['password'], method='sha256')
-        new_email=request.form['email']
-        new_perfil=1
-        new_user=Users(nombre=new_nombre, telefono=new_telefono,
-                       email=new_email, password=new_password, perfil=new_perfil)
-        db.session.add(new_user)
-        db.session.commit()
-        # db.create_all()
-
-        return redirect('/home')
+    try:
+        if request.method == 'POST':
+            new_nombre=request.form['nombre']
+            new_telefono=request.form['telefono']
+            new_password=generate_password_hash(
+                request.form['password'], method='sha256')
+            new_email=request.form['email']
+            new_perfil=1
+            new_user=Users(nombre=new_nombre, telefono=new_telefono,
+                        email=new_email, password=new_password, perfil=new_perfil)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect('/home')
+    except Exception as e:
+        print(e)
     return render_template('index.html')
 
 @ app.route('/login',  methods=['GET', 'POST'])
 def login():
-    if request.method != 'POST':
-        return redirect(url_for('inicio'))
-    user=Users.query.filter_by(email=request.form['email']).first()
-    if user and check_password_hash(user.password, request.form['password']):
-        if user.perfil == '2':
-            session['username']=user.nombre
-            return redirect(url_for('home'))
-        session['usercompra'] = user.nombre
-        session['userid'] = user.id
-        return redirect(url_for('compra'))
+    try:
+        if request.method != 'POST':
+            return redirect(url_for('inicio'))
+        user=Users.query.filter_by(email=request.form['email']).first()
+        if user and check_password_hash(user.password, request.form['password']):
+            if user.perfil == '2':
+                session['username']=user.nombre
+                return redirect(url_for('home'))
+            session['usercompra'] = user.nombre
+            session['userid'] = user.id
+            return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('inicio'))
 
 
@@ -112,103 +108,138 @@ def logout():
 
 @app.route('/crear_producto',  methods=["GET", "POST"])
 def crear_producto():
-    if request.method == 'POST':
-        producto=request.form['producto']
-        categoria=request.form['categoria']
-        precio=request.form['precio']
-        stock=request.form['stock']
-        new_producto=Products(producto=producto, categoria=categoria, precio=precio, stock=stock)
-        db.session.add(new_producto)
-        db.session.commit()
-        return redirect(url_for('home'))
+    try:
+        if request.method == 'POST':
+            producto=request.form['producto']
+            categoria=request.form['categoria']
+            precio=request.form['precio']
+            stock=request.form['stock']
+            new_producto=Products(producto=producto, categoria=categoria, precio=precio, stock=stock)
+            db.session.add(new_producto)
+            db.session.commit()
+            return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('home'))
 
 @app.route('/home/edit_product', methods=["GET", "POST"])
 def edit_product():
-    if request.method == 'POST':
-        idp = request.form['editprodid']
-        prod=request.form['editproducto']
-        cat=request.form['editcat']
-        pre=request.form['editprecio']
-        stock=request.form['editstock']
-        Products.query.filter_by(id=idp).update(dict(producto=prod, categoria=cat, precio=pre, stock=stock))
-        db.session.commit()
-        return redirect(url_for('home'))
+    try:
+        if request.method == 'POST':
+            idp = request.form['editprodid']
+            prod=request.form['editproducto']
+            cat=request.form['editcat']
+            pre=request.form['editprecio']
+            stock=request.form['editstock']
+            Products.query.filter_by(id=idp).update(dict(producto=prod, categoria=cat, precio=pre, stock=stock))
+            db.session.commit()
+            return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('home'))
 
 @app.route('/home/delete_product/<int:id>', methods=["get","post"])
 def delete_product(id):
-    producto = Products.query.get(id)
-    db.session.delete(producto)
-    db.session.commit()
+    try:
+        producto = Products.query.get(id)
+        db.session.delete(producto)
+        db.session.commit()
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('home'))
+    
 
 @app.route('/home/edit_user', methods=["GET", "POST"])
 def edit_user():
-    if request.method == 'POST':
-        idu = request.form['id']
-        new_nombre=request.form['nombre']
-        new_telefono=request.form['telefono']
-        new_password=generate_password_hash(request.form['password'], method='sha256')
-        new_email=request.form['email']
-        new_perfil=request.form['perfil']
-        Users.query.filter_by(id=idu).update(dict(nombre=new_nombre, telefono=new_telefono,
-                       email=new_email, password=new_password, perfil=new_perfil))
-        db.session.commit()
+    try:
+        if request.method == 'POST':
+            idu = request.form['id']
+            new_nombre=request.form['nombre']
+            new_telefono=request.form['telefono']
+            new_password=generate_password_hash(request.form['password'], method='sha256')
+            new_email=request.form['email']
+            new_perfil=request.form['perfil']
+            Users.query.filter_by(id=idu).update(dict(nombre=new_nombre, telefono=new_telefono,
+                        email=new_email, password=new_password, perfil=new_perfil))
+            db.session.commit()
+    except Exception as e:
+        print(e)
     return redirect(url_for('home'))
 
 @app.route('/home/delete_user/<int:id>', methods=["get","post"])
 def delete_user(id):
-    user = Users.query.get(id)
-    db.session.delete(user)
-    db.session.commit()
+    try:
+        user = Users.query.get(id)
+        db.session.delete(user)
+        db.session.commit()
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('home'))
 
 @app.route('/home/delete_comenta/<int:id>', methods=["get","post"])
 def delete_comenta(id):
-    comentario = Comentarios.query.get(id)
-    db.session.delete(comentario)
-    db.session.commit()
+    try:
+        comentario = Comentarios.query.get(id)
+        db.session.delete(comentario)
+        db.session.commit()
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('home'))
 
 @app.route('/compra')
 def compra():
-    if 'usercompra' in session:
-        userid = session['userid']
-        getCart()
-        productos = Products.query.all()
-        comentarios = Comentarios.query.filter_by(id_user=userid).all()
-    
-        return render_template('compra.html', productos=productos, comentarios=comentarios)
+    try:
+        if 'usercompra' in session:
+            userid = session['userid']
+            getCart()
+            productos = Products.query.all()
+            comentarios = Comentarios.query.filter_by(id_user=userid).all()
+    except Exception as e:
+        print(e)
+    return render_template('compra.html', productos=productos, comentarios=comentarios)
 
 @app.route('/compra/comentar', methods=["get","post"])
 def comentar():
-    if request.method == 'POST':
-        new_comentario=request.form['comentario']
-        new_idproducto=request.form['idproducto']
-        new_idusuario=request.form['idusuario']
-        new_comentario=Comentarios(comentario=new_comentario, id_user=new_idusuario, id_producto=new_idproducto)
-        db.session.add(new_comentario)
-        db.session.commit()
-        return redirect(url_for('compra'))
+    try:
+        if request.method == 'POST':
+            new_comentario=request.form['comentario']
+            new_idproducto=request.form['idproducto']
+            new_idusuario=request.form['idusuario']
+            new_comentario=Comentarios(comentario=new_comentario, id_user=new_idusuario, id_producto=new_idproducto)
+            db.session.add(new_comentario)
+            db.session.commit()
+            return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
+    return redirect(url_for('compra'))
 
 
 @app.route('/compra/edit_comentar', methods=['get','post'])
 def edit_comentar():
-    if request.method == 'POST':
-        idc = request.form['id']
-        com = request.form['comentario']
-        Comentarios.query.filter_by(id=idc).update(dict(comentario=com))
-        db.session.commit()
-        return redirect(url_for('compra'))
+    try:
+        if request.method == 'POST':
+            idc = request.form['id']
+            com = request.form['comentario']
+            Comentarios.query.filter_by(id=idc).update(dict(comentario=com))
+            db.session.commit()
+            return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('compra'))
     
 
 @app.route('/compra/del_comenta/<int:id>', methods=["get","post"])
 def del_comenta(id):
-    comentario = Comentarios.query.get(id)
-    db.session.delete(comentario)
-    db.session.commit()
+    try:
+        comentario = Comentarios.query.get(id)
+        db.session.delete(comentario)
+        db.session.commit()
+        return redirect(url_for('compra'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('compra'))
 
 # Carrito de Compra
@@ -247,19 +278,21 @@ def addcar():
                 return redirect(request.referrer)
     except Exception as e:
         print(e)
-    finally:
-        return redirect(request.referrer)
+    return redirect(request.referrer)
     
 @app.route('/compra/carts')
 def getCart():
-    if 'Carritocompra' not in session or len(session['Carritocompra'])<= 0:
-        return redirect(url_for('compra'))
-    grantotal = sum(
-        float(prod['precio']) * int(prod['cantidad'])
-        for key, prod in session['Carritocompra'].items()
-    )
-    print(grantotal)
-    return redirect(url_for('compra', grantotal=grantotal))
+    try:
+        if 'Carritocompra' not in session or len(session['Carritocompra'])<= 0:
+            return redirect(url_for('compra'))
+        grantotal = sum(
+            float(prod['precio']) * int(prod['cantidad'])
+            for key, prod in session['Carritocompra'].items()
+        )
+        print(grantotal)
+        return redirect(url_for('compra', grantotal=grantotal))
+    except Exception as e:
+        print(e)
 
 @app.route('/compra/deleteitem/<int:id>')
 def deleteitem(id):
@@ -273,7 +306,7 @@ def deleteitem(id):
                 return redirect(url_for('compra'))
     except Exception as e:
         print(e)
-        return redirect(url_for('compra'))
+    return redirect(url_for('compra'))
 
 @app.route('/compra/clearcart')
 def clearcart():
