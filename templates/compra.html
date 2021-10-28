@@ -103,6 +103,7 @@
                         <thead class="thead-light">
                             <tr style="text-align: center">
                                 <th>#</th>
+                                <th>Imagén</th>
                                 <th>Producto</th>
                                 <th>Categoria</th>
                                 <th>Precio</th>
@@ -113,6 +114,7 @@
                             {% for product in productos %}
                             <tr style="text-align: center">
                                 <td>{{loop.index}}</td>
+                                <td><img src="{{url_for('static', filename='image/'+product.imagen)}}" height="50"></td>
                                 <td>{{product.producto}}</td>
                                 <td>{{product.categoria}}</td>
                                 <td>{{product.precio}}</td>
@@ -281,8 +283,8 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
+                                            <th class="text-center">Item</th>
                                             <th class="text-center">Comentario</th>
-                                            <th class="text-center">Usuario</th>
                                             <th class="text-center">Producto</th>
                                             <th class="text-center">Acciones</th>
                                         </tr>
@@ -290,9 +292,8 @@
                                     <tbody>
                                         {% for comenta in comentarios %}
                                         <tr>
-                                            <!-- <td>{{comenta.id}}</td> -->
+                                            <td>{{loop.index}}</td>
                                             <td>{{comenta.comentario}}</td>
-                                            <td>{{comenta.users.nombre}}</td>
                                             <td>{{comenta.products.producto}}</td>
                                             <td>
                                                 <a href="{{comenta.id}}" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalcomentario{{comenta.id}}">Editar</a>
@@ -357,6 +358,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">Item</th>
                                         <th class="text-center">Deseo</th>
                                         <th class="text-center">Opciones</th>
                                     </tr>
@@ -364,6 +366,7 @@
                                 <tbody>
                                     {% for ldeseo in ldeseos %}
                                     <tr>
+                                        <td>{{loop.index}}</td>
                                         <td>{{ldeseo.products.producto}}</td>
                                         <td align="center">
                                             <a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalcarrito{{ldeseo.products.id}}">Carrito</a>

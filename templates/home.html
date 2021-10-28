@@ -110,6 +110,10 @@
                                         <input id="stock" class="form-control" type="text" name="stock" required>
                                     </div>
                                     <div class="form-group">
+                                        <label for="stock">Seleccione una imagen:</label>
+                                        <input type="file" name="imagen" accept="image/jpeg, image/png"  style="color: transparent" required>
+                                    </div>
+                                    <div class="form-group">
                                         <input class="btn btn-success" type="submit" value="Agregar">
 
                                     </div>
@@ -125,6 +129,7 @@
                         <thead class="thead-light">
                             <tr style="text-align: center">
                                 <th>Itém</th>
+                                <th>Imagén</th>
                                 <th>Producto</th>
                                 <th>Categoria</th>
                                 <th>Precio</th>
@@ -136,6 +141,7 @@
                             {% for product in productos %}
                             <tr>
                                 <td class="text-center">{{loop.index}}</td>
+                                <td><img src="{{url_for('static', filename='image/'+product.imagen)}}" height="50"></td>
                                 <td>{{product.producto}}</td>
                                 <td>{{product.categoria}}</td>
                                 <td>{{product.precio}}</td>
@@ -176,6 +182,10 @@
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Stock</label>
                                                                 <input type="number" name="editstock" value="{{product.stock}}" id="defaultForm-7" class="form-control validate" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="stock">Seleccione una imagen:</label>
+                                                                <input type="file" name="imagen" value="{{product.imagen}}" accept="image/jpeg, image/png" style="color: transparent">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer d-flex justify-content-center">
@@ -301,6 +311,7 @@
                                 <th>Usuario</th>
                                 <th class="text-center">Producto</th>
                                 <th class="text-center">Comentario</th>
+                                <th class="text-center">Fecha</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -311,6 +322,7 @@
                                 <td>{{comenta.users.nombre}}</td>
                                 <td>{{comenta.products.producto}}</td>
                                 <td>{{comenta.comentario}}</td>
+                                <td>{{comenta.pub_date}}</td>
                                 <td class="text-center">
                                     <a onclick="return confirm('¿Desea borrar el usuario?')" class="btn btn-danger btn-default btn-rounded mb-4" href="{{url_for('delete_comenta', id=comenta.id)}}">Eliminar</a>
                                 </td>
@@ -326,7 +338,7 @@
 
     <section id="deseos">
 
-        <div class="container p-4 m-4">
+        <div class="container">
             <div class="row">
                 <div class="col">
                     <h2>Listado de Deseos</h2>
@@ -337,6 +349,7 @@
                                     <th class="text-center">Itém</th>
                                     <th class="text-center">Usuario</th>
                                     <th class="text-center">Producto</th>
+                                    <th class="text-center">Fecha</th>
                                     <th class="text-center">Opciones</th>
                                 </tr>
                             </thead>
@@ -346,6 +359,7 @@
                                     <td class="text-center">{{loop.index}}</td>
                                     <td>{{ldeseo.users.nombre}}</td>
                                     <td>{{ldeseo.products.producto}}</td>
+                                    <td>{{ldeseo.pub_date}}</td>
                                     <td align="center"><a onclick=" return confirm( '¿Desea borrar el itém?') " class="btn btn-outline-danger btn-sm " href="{{url_for( 'del_deseo', id=ldeseo.id)}} ">Eliminar</a>
                                     </td>
                                 </tr>

@@ -2,13 +2,21 @@ from flask import Flask, render_template, request, session, url_for, flash, curr
 from werkzeug.utils import redirect
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
+from datetime import datetime
+from flask_uploads import IMAGES, UploadSet, configure_uploads
+from werkzeug.utils import secure_filename
+import os, secrets
 
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 dbdir = "sqlite:///" + os.path.abspath(os.getcwd()) + "/database.db"
-
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = dbdir
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SECRET_KEY']= 'kdhail1125ddfdfsdfcbzfda'
+app.config['UPLOADED_PHOTOS_DEST']= os.path.join(basedir, 'static/image')
+photos = UploadSet('photos', IMAGES)
+configure_uploads(app, photos)
 db = SQLAlchemy(app)
 
 app.secret_key = "1a2b3c4d5e6f7g8h9i"
@@ -31,6 +39,7 @@ class Products(db.Model):
     categoria = db.Column(db.String(50), nullable=False)
     precio = db.Column(db.Float, default = 0.0)
     stock = db.Column(db.Integer, default=0)
+    imagen = db.Column(db.String(150), nullable=False, default='image.jpg')
     comentario = db.relationship('Comentarios', backref='products')
     compra = db.relationship('Compras', backref='products')
     deseo = db.relationship('ListaDeseos', backref='products')
@@ -38,6 +47,7 @@ class Products(db.Model):
 class Comentarios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comentario = db.Column(db.String(300), nullable=False)
+    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     id_producto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
 
@@ -46,11 +56,13 @@ class Compras(db.Model):
     idProducto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
     cantidad = db.Column(db.Integer, default=1)
     formapago = db.Column(db.String(50), nullable=False)
+    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     idUsuario = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
 class ListaDeseos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     id_producto = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)
 
@@ -59,7 +71,8 @@ class ListaDeseos(db.Model):
 @ app.route('/')
 def inicio():
     productos = Products.query.all()
-    return render_template('index.html', productos=productos)
+    comentarios = Comentarios.query.all()
+    return render_template('index.html', productos=productos, comentarios=comentarios)
 
 
 @ app.route('/signup',  methods=["GET", "POST"])
@@ -132,7 +145,8 @@ def crear_producto():
             categoria=request.form['categoria']
             precio=request.form['precio']
             stock=request.form['stock']
-            new_producto=Products(producto=producto, categoria=categoria, precio=precio, stock=stock)
+            imagen = photos.save(request.files.get('imagen'), name=secrets.token_hex(10)+".")
+            new_producto=Products(producto=producto, categoria=categoria, precio=precio, stock=stock, imagen=imagen)
             db.session.add(new_producto)
             db.session.commit()
             return redirect(url_for('home'))
@@ -142,7 +156,6 @@ def crear_producto():
 
 @app.route('/home/edit_product', methods=["GET", "POST"])
 def edit_product():
-
     try:
         if request.method == 'POST':
             idp = request.form['editprodid']
@@ -150,6 +163,13 @@ def edit_product():
             cat=request.form['editcat']
             pre=request.form['editprecio']
             stock=request.form['editstock']
+            producto = Products.query.get_or_404(idp)
+            if request.files.get('imagen'):
+                try:
+                    os.unlink(os.path.join(current_app.root_path, "static/image"+producto.imagen))
+                    producto.imagen = photos.save(request.files.get('imagen'), name=secrets.token_hex(10)+".")
+                except Exception as e:
+                    producto.imagen = photos.save(request.files.get('imagen'), name=secrets.token_hex(10)+".")
             Products.query.filter_by(id=idp).update(dict(producto=prod, categoria=cat, precio=pre, stock=stock))
             db.session.commit()
             return redirect(url_for('home'))

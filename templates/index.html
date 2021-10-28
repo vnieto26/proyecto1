@@ -70,15 +70,13 @@
     <!-- home section starts  -->
 
     <section class="home" id="home">
-
         <div class="content">
-            <h3> <span> Productos frescos y orgánicos para ti</span> </h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam libero nostrum veniam facere tempore nisi.
+            <h1 class="heading"> <span> Productos frescos y orgánicos para ti</span> </h1>
+            <p style="font-size: 20px">El interés por la salud y el bienestar, así como una mayor preocupación por el ambiente hacen de los alimentos 
+                orgánicos frescos y procesados, uno de los mercados más dinámicos en el mundo. 
             </p>
             <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
-
         </div>
-
         <form action="{{ url_for('login')}}" method="post">
             <div class="modal fade" id="modallogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -140,7 +138,6 @@
                                     <label data-error="wrong" data-success="right" for="defaultForm-number">Contraseña</label>
                                 </div>
                             </div>
-
                             <div class="modal-footer d-flex justify-content-center">
                                 <button class="btn btn-default">Registrar</button>
                             </div>
@@ -148,8 +145,6 @@
                     </div>
                 </div>
         </form>
-
-
     </section>
 
     <!-- home section ends -->
@@ -161,17 +156,17 @@
             <div class="box">
                 <img src="{{url_for('static', filename='image/feature-img-1.png')}}" alt="">
                 <h3>Fresco y Orgánico</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+                
             </div>
             <div class="box">
                 <img src="{{url_for('static', filename='image/feature-img-2.png')}}" alt="">
                 <h3>Entrega gratis</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+                
             </div>
             <div class="box">
                 <img src="{{url_for('static', filename='image/feature-img-3.png')}}" alt="">
                 <h3>Pagos fáciles</h3>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
+                
             </div>
         </div>
     </section>
@@ -182,58 +177,27 @@
         <h1 class="heading"><span> Nuestros Productos</span> </h1>
         <div class="swiper product-slider">
             <div class="swiper-wrapper">
+                {% for producto in productos %}
                 <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-1.png')}}" alt="">
-                    <h3>Naranja fresca</h3>
-                    <div class="price"> $3.500 - $5.000 </div>
+                    <img src="{{url_for('static', filename='image/'+ producto.imagen)}}" alt="">
+                    <h2>{{producto.producto}}</h2>
+                    <h3> ${{producto.precio}} </h3>
                     <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
                 </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-2.png')}}" alt="">
-                    <h3>Cebolla fresca</h3>
-                    <div class="price"> $5.000 - $7.000 </div>
-                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
-                </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-3.png')}}" alt="">
-                    <h3>Carne fresca</h3>
-                    <div class="price"> $12.000 - $16.000 </div>
-                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
-                </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-4.png')}}" alt="">
-                    <h3>Repollo fresco</h3>
-                    <div class="price"> $2.500 - $3.500 </div>
-                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
-                </div>
+                 {% endfor %}
             </div>
+            
         </div>
         <div class="swiper product-slider">
             <div class="swiper-wrapper">
+                {% for producto in productos %}
                 <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-5.png')}}" alt="">
-                    <h3>Papa fresca</h3>
-                    <div class="price"> $5.400 - $6.800 </div>
+                    <img src="{{url_for('static', filename='image/'+ producto.imagen)}}" alt="">
+                    <h2>{{producto.producto}}</h2>
+                    <h3> ${{producto.precio}}</h3>
                     <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
                 </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-6.png')}}" alt="">
-                    <h3>Aguacate fresco</h3>
-                    <div class="price"> $4.500 - $6.500 </div>
-                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
-                </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-7.png')}}" alt="">
-                    <h3>Zanahoria fresca</h3>
-                    <div class="price"> $5.200 - $6.800 </div>
-                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
-                </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/product-8.png')}}" alt="">
-                    <h3>Limón</h3>
-                    <div class="price"> $2.500 - $3.500 </div>
-                    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -247,7 +211,7 @@
                 <img src="{{url_for('static', filename='image/cat-1.png')}}" alt="">
                 <h3>Vegetales</h3>
                 <p>Hasta un 45% de descuento</p>
-                <<a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar ahora</a>
+                <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar ahora</a>
             </div>
             <div class="box">
                 <img src="{{url_for('static', filename='image/cat-2.png')}}" alt="">
@@ -270,54 +234,13 @@
         <h1 class="heading"> <span>Comentarios de clientes </span></h1>
         <div class="swiper review-slider">
             <div class="swiper-wrapper">
+                {% for comenta in comentarios %}
                 <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/pic-1.png')}}" alt="">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
-                    <h3>josé pérez</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
+                    <h3>{{comenta.users.nombre}}</h3>
+                    <p>{{comenta.comentario}}</p>
+                    <p>{{comenta.pub_date.strftime('%Y-%m-%d')}}</p>
                 </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/pic-2.png')}}" alt="">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
-                    <h3>maría gómez</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/pic-3.png')}}" alt="">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
-                    <h3>Carlos Castro</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
-                <div class="swiper-slide box">
-                    <img src="{{url_for('static', filename='image/pic-4.png')}}" alt="">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
-                    <h3>Rosa Rodríguez</h3>
-                    <div class="stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -331,35 +254,32 @@
                 <img src="{{url_for('static', filename='image/blog-1.jpg')}}" alt="">
                 <div class="content">
                     <div class="icons">
-                        <a href="#"> <i class="fas fa-user"></i> by user </a>
-                        <a href="#"> <i class="fas fa-calendar"></i> 18 de octubre, 2021 </a>
+                        <a href="#"> <i class="fas fa-user"></i> Tiffani co </a>
+                        <a href="#"> <i class="fas fa-calendar"></i> 28 de octubre, 2021 </a>
                     </div>
                     <h3>Verduras y frutas frescas y orgánicas</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, expedita.</p>
                     <a href="#" class="btn">leer más...</a>
                 </div>
             </div>
             <div class="box">
-                <img src="{{url_for('static', filename='image/blog-2.jpg')}}" alt="">
+                <img src="{{url_for('static', filename='image/carnes.jpg')}}" alt="">
                 <div class="content">
                     <div class="icons">
-                        <a href="#"> <i class="fas fa-user"></i> by user </a>
-                        <a href="#"> <i class="fas fa-calendar"></i> 18 de octubre, 2021 </a>
+                        <a href="#"> <i class="fas fa-user"></i> Tiffani co </a>
+                        <a href="#"> <i class="fas fa-calendar"></i> 28 de octubre, 2021 </a>
                     </div>
-                    <h3>Verduras y frutas frescas y orgánicas</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, expedita.</p>
+                    <h3>Carnes frescas</h3>
                     <a href="#" class="btn">leer más...</a>
                 </div>
             </div>
             <div class="box">
-                <img src="{{url_for('static', filename='image/blog-3.jpg')}}" alt="">
+                <img src="{{url_for('static', filename='image/lacteos.jpg')}}" alt="">
                 <div class="content">
                     <div class="icons">
-                        <a href="#"> <i class="fas fa-user"></i> by user </a>
-                        <a href="#"> <i class="fas fa-calendar"></i> 18 de octubre, 2021 </a>
+                        <a href="#"> <i class="fas fa-user"></i> Tiffani co </a>
+                        <a href="#"> <i class="fas fa-calendar"></i> 28 de octubre, 2021 </a>
                     </div>
-                    <h3>Verduras y frutas frescas y orgánicas</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, expedita.</p>
+                    <h3>Productos lacteos</h3>
                     <a href="#" class="btn">leer más...</a>
                 </div>
             </div>
@@ -402,12 +322,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-
     <!-- custom js file link  -->
     <script src="{{url_for('static', filename='js/script.js') }}"></script>
-
 </body>
-
 </html>
