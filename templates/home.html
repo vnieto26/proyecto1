@@ -162,20 +162,20 @@
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Producto</label>
-                                                                <input type="text" name="editproducto" value="{{product.producto}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="text" name="editproducto" value="{{product.producto}}" class="form-control" id="defaultForm-4" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Categoría</label>
-                                                                <input type="text" name="editcat" value="{{product.categoria}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="text" name="editcat" value="{{product.categoria}}" class="form-control" id="defaultForm-5" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Precio</label>
-                                                                <input type="number" name="editprecio" value="{{product.precio}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="number" name="editprecio" value="{{product.precio}}" class="form-control" id="defaultForm-6" class="form-control validate" required>
 
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Stock</label>
-                                                                <input type="number" name="editstock" value="{{product.stock}}" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="number" name="editstock" value="{{product.stock}}" id="defaultForm-7" class="form-control validate" required>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer d-flex justify-content-center">
@@ -243,27 +243,27 @@
                                                     <div class="modal-body mx-3">
                                                         <div class="md-form mb-4">
                                                             <div class="md-form mb-4">
-                                                                <input hidden type="number" name="id" value="{{user.id}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input hidden type="number" name="id" value="{{user.id}}" class="form-control" id="defaultForm-9" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Nombre</label>
-                                                                <input type="text" name="nombre" value="{{user.nombre}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="text" name="nombre" value="{{user.nombre}}" class="form-control" id="defaultForm-10" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Teléfono</label>
-                                                                <input type="text" name="telefono" value="{{user.telefono}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="text" name="telefono" value="{{user.telefono}}" class="form-control" id="defaultForm-11" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Email</label>
-                                                                <input type="text" name="email" value="{{user.email}}" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="text" name="email" value="{{user.email}}" class="form-control" id="defaultForm-12" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Contraseña</label>
-                                                                <input type="text" name="password" value="" class="form-control" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="text" name="password" value="" class="form-control" id="defaultForm-13" class="form-control validate" required>
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <label data-error="wrong" data-success="right" for="defaultForm-number">Perfil</label>
-                                                                <input type="number" name="perfil" value="{{user.perfil}}" id="defaultForm-3" class="form-control validate" required>
+                                                                <input type="number" name="perfil" value="{{user.perfil}}" id="defaultForm-14" class="form-control validate" required>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer d-flex justify-content-center">
@@ -346,14 +346,14 @@
                                     <td class="text-center">{{loop.index}}</td>
                                     <td>{{ldeseo.users.nombre}}</td>
                                     <td>{{ldeseo.products.producto}}</td>
-                                    <td align="center"><a onclick=" return confirm( '¿Desea borrar el itém?') " class="btn btn-outline-danger btn-sm " href="{{url_for( 'del_ldeseo', id=ldeseo.id)}} ">Eliminar</a>
+                                    <td align="center"><a onclick=" return confirm( '¿Desea borrar el itém?') " class="btn btn-outline-danger btn-sm " href="{{url_for( 'del_deseo', id=ldeseo.id)}} ">Eliminar</a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
-                </div class="col ">
+                </div>
             </div>
         </div>
 
@@ -361,47 +361,47 @@
 
 
     <!-- footer section starts  -->
-    <section class="footer ">
-        <div class="box-container ">
-            <div class="box ">
-                <h3> Tiffany Co. <i class="fas fa-shopping-basket "></i> </h3>
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3> Tiffany Co. <i class="fas fa-shopping-basket"></i> </h3>
                 <p>Productos frescos y orgánicos para ti.</p>
-                <div class="share ">
-                    <a href="# " class="fab fa-facebook-f "></a>
-                    <a href="# " class="fab fa-twitter "></a>
-                    <a href="# " class="fab fa-instagram "></a>
-                    <a href="# " class="fab fa-linkedin "></a>
+                <div class="share">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-linkedin"></a>
                 </div>
             </div>
 
             <div class="box ">
                 <h3>Contacto</h3>
-                <a href="# " class="links "> <i class="fas fa-phone "></i> +123-456-7890 </a>
-                <a href="# " class="links "> <i class="fas fa-phone "></i> +111-222-3333 </a>
-                <a href="# " class="links "> <i class="fas fa-envelope "></i> grupo383@gmail.com </a>
-                <a href="# " class="links "> <i class="fas fa-map-marker-alt "></i> Colombia </a>
+                <a href="#" class="links"> <i class="fas fa-phone"></i> +123-456-7890 </a>
+                <a href="#" class="links"> <i class="fas fa-phone"></i> +111-222-3333 </a>
+                <a href="#" class="links"> <i class="fas fa-envelope"></i> grupo383@gmail.com </a>
+                <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Colombia </a>
             </div>
 
-            <div class="box ">
+            <div class="box">
                 <h3>Boletín Informativo </h3>
                 <p>Suscríbete para recibir novedades sobre nuestras ofertas</p>
-                <input type="email " name="email_boletin " placeholder="Tu E-mail " class="email ">
-                <input type="submit " value="¡Subscribete! " class="btn ">
-                <img src="{{url_for( 'static', filename='image/payment.png' )}} " class="payment-img " alt=" ">
+                <input type="email" name="email_boletin " placeholder="Tu E-mail " class="email ">
+                <input type="submit" value="¡Subscribete! " class="btn ">
+                <img src="{{url_for('static', filename='image/payment.png')}} " class="payment-img" alt=" ">
             </div>
         </div>
         <div class="credit "> Copyright 2021 - <span> Misión TIC 2022 | Equipo 3 - Grupo 38 | UNINORTE</span> - All rights reserved </div>
     </section>
 
     <!-- footer section ends -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js "></script>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
     <!-- custom js file link  -->
-    <script src="{{url_for( 'static', filename='js/script.js' ) }} "></script>
+    <script src="{{url_for( 'static', filename='js/script.js' ) }}"></script>
 
 </body>
 

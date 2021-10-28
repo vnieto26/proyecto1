@@ -101,19 +101,27 @@ def login():
 
 @ app.route('/home')
 def home():
-    if 'username' in session:
-        productos = Products.query.all()
-        users = Users.query.all()
-        comentarios = Comentarios.query.all()
-        ldeseos = ListaDeseos.query.all()
-        return render_template('home.html', productos=productos, users=users, comentarios= comentarios, ldeseos=ldeseos)
+    try:
+        if 'username' in session:
+            productos = Products.query.all()
+            users = Users.query.all()
+            comentarios = Comentarios.query.all()
+            ldeseos = ListaDeseos.query.all()
+            return render_template('home.html', productos=productos, users=users, comentarios= comentarios, ldeseos=ldeseos)
+        return redirect(url_for('inicio'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('inicio'))
 
 
 @ app.route('/logout')
 def logout():
-    session.pop('username', None)
-    session.pop('Carritocompra', None)
+    try:
+        session.pop('username', None)
+        session.pop('Carritocompra', None)
+        return redirect(url_for('inicio'))
+    except Exception as e:
+        print(e)
     return redirect(url_for('inicio'))
 
 @app.route('/crear_producto',  methods=["GET", "POST"])
@@ -134,6 +142,7 @@ def crear_producto():
 
 @app.route('/home/edit_product', methods=["GET", "POST"])
 def edit_product():
+
     try:
         if request.method == 'POST':
             idp = request.form['editprodid']
@@ -158,7 +167,7 @@ def delete_product(id):
     except Exception as e:
         print(e)
     return redirect(url_for('home'))
-    
+
 
 @app.route('/home/edit_user', methods=["GET", "POST"])
 def edit_user():
@@ -173,6 +182,7 @@ def edit_user():
             Users.query.filter_by(id=idu).update(dict(nombre=new_nombre, telefono=new_telefono,
                         email=new_email, password=new_password, perfil=new_perfil))
             db.session.commit()
+            return redirect(url_for('home'))
     except Exception as e:
         print(e)
     return redirect(url_for('home'))
@@ -199,6 +209,17 @@ def delete_comenta(id):
         print(e)
     return redirect(url_for('home'))
 
+@app.route('/home/del_deseo/<int:id>', methods=["get","post"])
+def del_deseo(id):
+    try:
+        ldeseo = ListaDeseos.query.get(id)
+        db.session.delete(ldeseo)
+        db.session.commit()
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)
+    return redirect(url_for('home'))
+
 @app.route('/compra')
 def compra():
     try:
@@ -207,9 +228,10 @@ def compra():
             productos = Products.query.all()
             comentarios = Comentarios.query.filter_by(id_user=userid).all()
             ldeseos = ListaDeseos.query.filter_by(id_user=userid).all()
+            return render_template('compra.html', productos=productos, comentarios=comentarios, ldeseos= ldeseos)
     except Exception as e:
         print(e)
-    return render_template('compra.html', productos=productos, comentarios=comentarios, ldeseos= ldeseos)
+    return redirect(url_for('inicio'))
 
 @app.route('/compra/comentar', methods=["get","post"])
 def comentar():
@@ -239,7 +261,7 @@ def edit_comentar():
     except Exception as e:
         print(e)
     return redirect(url_for('compra'))
-    
+
 
 @app.route('/compra/del_comenta/<int:id>', methods=["get","post"])
 def del_comenta(id):
@@ -271,7 +293,7 @@ def addcar():
         idu = request.form['idu']
         product = Products.query.filter_by(id=idp).first()
         if idp and prod and cantidad and formap and idu and request.method == "POST":
-            DictItems = {idp:{'nombre':product.producto, 'precio': product.precio, 
+            DictItems = {idp:{'nombre':product.producto, 'precio': product.precio,
             'cantidad': cantidad, 'formap': formap, 'id_user': idu}}
             if 'Carritocompra' in session:
                 print(session['Carritocompra'])
@@ -289,7 +311,7 @@ def addcar():
     except Exception as e:
         print(e)
     return redirect(request.referrer)
-    
+
 @app.route('/compra/carts')
 def getCart():
     try:
@@ -303,6 +325,7 @@ def getCart():
         return redirect(url_for('compra', grantotal=grantotal))
     except Exception as e:
         print(e)
+    return redirect(url_for('compra'))
 
 @app.route('/compra/deleteitem/<int:id>')
 def deleteitem(id):
@@ -314,6 +337,7 @@ def deleteitem(id):
             if int(key)== id:
                 session['Carritocompra'].pop(key, None)
                 return redirect(url_for('compra'))
+            return redirect(url_for('compra'))
     except Exception as e:
         print(e)
     return redirect(url_for('compra'))
@@ -325,6 +349,7 @@ def clearcart():
         return redirect(url_for('compra'))
     except Exception as e:
         print(e)
+    return redirect(url_for('compra'))
 
 
 @app.route('/compra/addldeseo', methods=["get","post"])

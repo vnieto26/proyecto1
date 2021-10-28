@@ -21,8 +21,8 @@
         <nav class="navbar">
             <a href="{{url_for('compra')}}">Inicio</a>
             <a href="#products">Productos</a>
-            <a href="#review">Comentarios</a>
-            <a href="#listadeseos">Lista Deseos</a>
+            <a href="" data-toggle="modal" data-target="#modalComenta">Comentarios</a>
+            <a href="" data-toggle="modal" data-target="#tabladeseo">Lista Deseos</a>
             <a href="#products">Usuario</a>
             <a href="{{url_for('compra')}}">{{session['usercompra']}}</a>
         </nav>
@@ -54,7 +54,7 @@
                                 <th>Borrar</th>
                             </thead>
                             <tbody>
-                                {% if 'Carritocompra' in session%}
+                                {% if 'Carritocompra' in session%} 
                                 {% for key, product in session['Carritocompra'].items() %}
                                 <tr>
                                     <td>{{loop.index}}</td>
@@ -66,8 +66,7 @@
                                     <td><a href="{{url_for('deleteitem', id=key)}}" class="btn btn-danger">Borrar</a>
                                     </td>
                                 </tr>
-                                {% endfor %}
-                                {% endif %}
+                                {% endfor %} {% endif %}
                                 <tr>
                                     <td colspan="2"><a href="{{url_for('compra')}}">Verificar</a></td>
                                     <td colspan="3">Total compra: {{grantotal}}</td>
@@ -100,7 +99,7 @@
             <div class="row">
                 <div class="col">
                     <h2>Listado de Productos</h2>
-                    <table class="table table-light">
+                    <table class="table table-striped">
                         <thead class="thead-light">
                             <tr style="text-align: center">
                                 <th>#</th>
@@ -113,21 +112,18 @@
                         <tbody>
                             {% for product in productos %}
                             <tr style="text-align: center">
-                                <td>{{product.id}}</td>
+                                <td>{{loop.index}}</td>
                                 <td>{{product.producto}}</td>
                                 <td>{{product.categoria}}</td>
                                 <td>{{product.precio}}</td>
                                 <td>
                                     <div>
-                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
-                                            data-target="#modalLoginForm{{product.id}}">Comentar</a>
-                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
-                                            data-target="#modalcarrito{{product.id}}"">Carrito</a>
-                                        <a href="" class=" btn btn-default btn-rounded mb-4" data-toggle="modal"
-                                            data-target="#modaldeseo{{product.id}}">Deseo</a>
+                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm{{product.id}}">Comentar</a>
+                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalcarrito{{product.id}}">Carrito</a>
+                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modaldeseo{{product.id}}">Deseo</a>
                                         <!-- Modal Comentar -->
-                                        <form action=" {{ url_for('comentar')}}" method="post">
-                                            <div class="modal fade" id="modalLoginForm{{product.id}}" tabindex="-1"
+                                        <form action="{{ url_for( 'comentar' )}}" method="post">
+                                            <div class="modal fade" id="modalLoginForm{{product.id}}" tabindex=" -1 "
                                                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -148,8 +144,7 @@
                                                             </div>
                                                             <div class="md-form mb-4">
                                                                 <input hidden readonly type="number" name="idproducto"
-                                                                    value="{{product.id}}" class="form-control"
-                                                                    id="defaultForm-2" class="form-control validate"
+                                                                    value="{{product.id}}" id=" defaultForm-2 " class=" form-control validate "
                                                                     required>
 
                                                             </div>
@@ -167,14 +162,13 @@
                                                 </div>
                                             </div>
                                         </form>
-                                        <form action=" {{ url_for('addcar')}}" method="post">
+                                        <form action="{{ url_for('addcar')}}" method="post">
                                             <div class="modal fade" id="modalcarrito{{product.id}}" tabindex="-1"
                                                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header text-center">
-                                                            <h4 class="modal-title w-100 font-weight-bold">Carrito de
-                                                                Compras</h4>
+                                                            <h4 class="modal-title w-100 font-weight-bold">Carrito de Compras</h4>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
@@ -184,21 +178,15 @@
                                                             <div class="md-form mb-4">
                                                                 <div class="md-form mb-4">
                                                                     <input hidden type="number" name="idp"
-                                                                        value="{{product.id}}" class="form-control"
-                                                                        id="defaultForm-3" class="form-control validate"
-                                                                        required>
+                                                                        value="{{product.id}}" id="defaultForm-4" class="form-control validate" required>
                                                                 </div>
                                                                 <div class="md-form mb-4">
                                                                     <input readonly type="text" name="prod"
-                                                                        value="{{product.producto}}"
-                                                                        class="form-control" id="defaultForm-3"
-                                                                        class="form-control validate" required>
-                                                                    <label data-error="wrong" data-success="right"
-                                                                        for="defaultForm-number">Producto</label>
+                                                                        value="{{product.producto}}" id="defaultForm-5" class="form-control validate" required>
+                                                                    <label data-error="wrong" data-success="right" for="defaultForm-number">Producto</label>
                                                                 </div>
                                                                 <div class="md-form mb-4">
-                                                                    <input type="number" name="cantidad"
-                                                                        class="form-control" id="defaultForm-3"
+                                                                    <input type="number" name="cantidad" id=" efaultForm-6"
                                                                         class="form-control validate" required>
                                                                     <label data-error="wrong" data-success="right"
                                                                         for="defaultForm-number">Cantidad</label>
@@ -208,15 +196,14 @@
                                                                         for="defaultForm-number">Forma de Pago</label>
                                                                     <select name="formap" id="">
                                                                         <option value="Efectivo">Efectivo</option>
-                                                                        <option value="Tarjeta Credito">Tarjeta de
-                                                                            Crédito</option>
+                                                                        <option value="Tarjeta Credito">Tarjeta de Crédito</option>
                                                                         <option value="PSE">PSE</option>
                                                                         <option value="Otro">Otro</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="md-form mb-4">
                                                                     <input hidden type="number" name="idu"
-                                                                        value="{{session['userid']}}" id="defaultForm-3"
+                                                                        value="{{session['userid']}}" id="defaultForm-7"
                                                                         class="form-control validate" required>
                                                                 </div>
                                                             </div>
@@ -228,15 +215,14 @@
                                                 </div>
                                             </div>
                                         </form>
-                                        
+
                                         <form action="{{ url_for('addldeseo')}}" method="post">
                                             <div class="modal fade" id="modaldeseo{{product.id}}" tabindex="-1" role="dialog"
                                                 aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header text-center">
-                                                            <h4 class="modal-title w-100 font-weight-bold"> Enviar a lista de deseos
-                                                            </h4>
+                                                            <h4 class="modal-title w-100 font-weight-bold"> Enviar a lista de deseos</h4>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
@@ -246,17 +232,17 @@
                                                             <div class="md-form mb-4">
                                                                 <div class="md-form mb-4">
                                                                     <input hidden type="number" name="idproducto"
-                                                                        value="{{product.id}}" id="defaultForm-4"
+                                                                        value="{{product.id}}" id="defaultForm-8"
                                                                         class="form-control">
                                                                 </div>
                                                                 <div class="md-form mb-4">
                                                                     <input readonly type="text" name="producto"
                                                                         value="{{product.producto}}" class="form-control"
-                                                                        id="defaultForm-4">
+                                                                        id="defaultForm-9">
                                                                 </div>
                                                                 <div class="md-form mb-4">
                                                                     <input hidden type="number" name="idusuario"
-                                                                        value="{{session['userid']}}" id="defaultForm-4"
+                                                                        value="{{session['userid']}}" id="defaultForm-10"
                                                                         class="form-control">
                                                                 </div>
                                                             </div>
@@ -280,116 +266,127 @@
     </section>
     <!-- review section starts  -->
     <section class="reviews" id="comentarios">
-        <div class="container p-4 mt-4">
-            <div class="col">
-                <h2>Listado de Comentarios</h2>
-                <table class="table table-light">
-                    <thead class="thead-light">
-                        <tr style="text-align: center">
-                            <th>#</th>
-                            <th>Comentario</th>
-                            <th>Usuario</th>
-                            <th>Producto</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for comenta in comentarios %}
-                        <tr style="text-align: center">
-                            <td>{{comenta.id}}</td>
-                            <td>{{comenta.comentario}}</td>
-                            <td>{{comenta.users.nombre}}</td>
-                            <td>{{comenta.products.producto}}</td>
-                            <td>
-                                <a href="{{comenta.id}}" class="btn btn-default btn-rounded mb-4" data-toggle="modal"
-                                    data-target="#modalcomentario{{comenta.id}}">Editar</a>
-                                <a onclick="return confirm('¿Desea borrar el producto?')"
-                                    class="btn btn-danger tn-rounded mb-4"
-                                    href="{{url_for('del_comenta', id=comenta.id)}}">Eliminar</a>
-                                <form action=" {{ url_for('edit_comentar')}}" method="post">
-                                    <div class="modal fade" id="modalcomentario{{comenta.id}}" tabindex="-1"
-                                        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header text-center">
-                                                    <h4 class="modal-title w-100 font-weight-bold">Comentarios</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body mx-3">
-                                                    <div class="md-form mb-4">
-                                                        <div class="md-form mb-4">
-                                                            <input hidden type="number" name="id" value="{{comenta.id}}"
-                                                                class="form-control" id="defaultForm-3"
-                                                                class="form-control validate" required>
-                                                        </div>
-                                                        <div class="md-form mb-4">
-                                                            <input type="text" name="comentario"
-                                                                value="{{comenta.comentario}}" class="form-control"
-                                                                id="defaultForm-3" class="form-control validate"
-                                                                required>
-                                                            <label data-error="wrong" data-success="right"
-                                                                for="defaultForm-number">Comentario</label>
+        <div class="container">
+            <div class="modal fade" id="modalComenta" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Lista de Comentarios</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Comentario</th>
+                                            <th class="text-center">Usuario</th>
+                                            <th class="text-center">Producto</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for comenta in comentarios %}
+                                        <tr>
+                                            <!-- <td>{{comenta.id}}</td> -->
+                                            <td>{{comenta.comentario}}</td>
+                                            <td>{{comenta.users.nombre}}</td>
+                                            <td>{{comenta.products.producto}}</td>
+                                            <td>
+                                                <a href="{{comenta.id}}" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalcomentario{{comenta.id}}">Editar</a>
+                                                <a onclick="return confirm('¿Desea borrar el producto?')" class="btn btn-danger tn-rounded mb-4" href="{{url_for('del_comenta', id=comenta.id)}}">Eliminar</a>
+                                                <form action="{{ url_for('edit_comentar')}}" method="post">
+                                                    <div class="modal fade" id="modalcomentario{{comenta.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header text-center">
+                                                                    <h4 class="modal-title w-100 font-weight-bold">
+                                                                        Comentarios</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body mx-3">
+                                                                    <div class="md-form mb-4">
+                                                                        <div class="md-form mb-4">
+                                                                            <input hidden type="number" name="id" value="{{comenta.id}}" id="defaultForm-11" class="form-control validate" required>
+                                                                        </div>
+                                                                        <div class="md-form mb-4">
+                                                                            <input type="text" name="comentario" value="{{comenta.comentario}}" id="defaultForm-12" class="form-control validate" required>
+                                                                            <label data-error="wrong" data-success="right  for="defaultForm-number">Comentario</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer d-flex justify-content-center">
+                                                                        <button class="btn btn-default">Registrar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer d-flex justify-content-center">
-                                                        <button class="btn btn-default">Registrar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-
-                    </tbody>
-                </table>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         </div>
     </section>
     <!-- Lista de Deseos  -->
-    <section class="reviews" id="listadeseos">
-        <div class="container p-4 mt-4">
-            <div class="col">
-                <h2>Lista de Deseos</h2>
-                <table class="table table-light">
-                    <thead class="thead-light">
-                        <tr style="text-align: center">
-                            <th>#</th>
-                            <th>Usuario</th>
-                            <th>Producto</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for ldeseo in ldeseos %}
-                        <tr style="text-align: center">
-                            <td>{{ldeseo.id}}</td>
-                            <td>{{ldeseo.users.nombre}}</td>
-                            <td>{{ldeseo.products.producto}}</td>
-                            <td>
-                                <a onclick="return confirm('¿Desea borrar el itém?')"
-                                    class="btn btn-danger tn-rounded mb-4"
-                                    href="{{url_for('del_ldeseo', id=ldeseo.id)}}">Eliminar</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-
-                    </tbody>
-                </table>
+     <!-- Lista de Deseos  -->
+    <section>
+        <div class="modal fade" id="tabladeseo" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Lista de Deseos</h3>
+                        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Deseo</th>
+                                        <th class="text-center">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for ldeseo in ldeseos %}
+                                    <tr>
+                                        <td>{{ldeseo.products.producto}}</td>
+                                        <td align="center">
+                                            <a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalcarrito{{ldeseo.products.id}}">Carrito</a>
+                                            <a onclick="return confirm('¿Desea borrar el itém?')" class="btn btn-outline-danger btn-sm" href="{{url_for('del_ldeseo', id=ldeseo.id)}}">Eliminar</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
             </div>
-        </div>
+        </div> -->
+        <!-- Modal -->
     </section>
-    <!-- footer section starts  -->
+   <!-- footer section starts  -->
     <section class="footer">
         <div class="box-container">
             <div class="box">
-                <h3> Tiffany co <i class="fas fa-shopping-basket"></i> </h3>
+                <h3> Tiffany Co. <i class="fas fa-shopping-basket"></i> </h3>
                 <p>Productos frescos y orgánicos para ti.</p>
                 <div class="share">
                     <a href="#" class="fab fa-facebook-f"></a>
@@ -399,31 +396,36 @@
                 </div>
             </div>
 
-            <div class="box">
+            <div class=" box ">
                 <h3>Contacto</h3>
                 <a href="#" class="links"> <i class="fas fa-phone"></i> +123-456-7890 </a>
                 <a href="#" class="links"> <i class="fas fa-phone"></i> +111-222-3333 </a>
                 <a href="#" class="links"> <i class="fas fa-envelope"></i> grupo383@gmail.com </a>
-                <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Cartagena, Colombia - 130014 </a>
+                <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Colombia </a>
+            </div>
+
+            <div class="box">
+                <h3>Boletín Informativo </h3>
+                <p>Suscríbete para recibir novedades sobre nuestras ofertas</p>
+                <input type="email" name=" email_boletin " placeholder=" Tu E-mail " class=" email ">
+                <input type="submit" value=" ¡Subscribete! " class=" btn ">
+                <img src="{{url_for('static', filename='image/payment.png')}}" class="payment-img" alt=" ">
             </div>
         </div>
-        <div class="credit"> created by <span> Misión TIC - Grupo 38 </span> | 2021 all rights reserved </div>
+        <div class="credit"> Copyright 2021 - <span> Misión TIC 2022 | Equipo 3 - Grupo 38 | UNINORTE</span> - All rights reserved </div>
     </section>
 
     <!-- JavaScript Bundle with Popper -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
 
     <!-- custom js file link  -->
-    <script src="{{url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{url_for( 'static' , filename='js/script.js' ) }}"></script>
 
 </body>
 </html>

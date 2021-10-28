@@ -97,11 +97,11 @@
                                 </div>
                                 <div class="md-form mb-4">
                                     <label data-error="wrong" data-success="right" for="defaultForm-number">Contraseña</label>
-                                    <input type="password" name="password" class="form-control validate" id="defaultForm-3" required>
+                                    <input type="password" name="password" class="form-control validate" id="defaultForm-4" required>
                                 </div>
                                 <!-- <p>Olvidaste tu contraseña <a href="#" class="" data-toggle="modal" data-target="#modalrecuperar" data-dismiss="modal"> Clic aquí</a></p>
                                 <p>Olvidaste tu contraseña <a href="#" class="" data-toggle="modal" data-target="#modalrecuperado"> Clic aquí</a></p> -->
-                                <p>No tengo una cuenta<a href="#" class="" data-toggle="modal" data-target="#modalcrearuser" data-dismiss="modal"> Crear ahora</div></a></p>
+                                <p>No tengo una cuenta<a href="#" class="" data-toggle="modal" data-target="#modalcrearuser" data-dismiss="modal"> Crear ahora</a></p>
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
                                 <!-- <input type="submit" value="Ingresar" class="btn"> -->
@@ -155,48 +155,34 @@
     <!-- home section ends -->
 
     <!-- features section starts  -->
-
     <section class="features" id="features">
-
         <h1 class="heading"><span> Nuestras Características</span> </h1>
-
         <div class="box-container">
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/feature-img-1.png')}}" alt="">
                 <h3>Fresco y Orgánico</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
-
             </div>
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/feature-img-2.png')}}" alt="">
                 <h3>Entrega gratis</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
-
             </div>
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/feature-img-3.png')}}" alt="">
                 <h3>Pagos fáciles</h3>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt, earum!</p>
-
             </div>
-
         </div>
-
     </section>
-
     <!-- features section ends -->
 
     <!-- products section starts  -->
-
     <section class="products" id="products">
         <h1 class="heading"><span> Nuestros Productos</span> </h1>
-
         <div class="swiper product-slider">
             <div class="swiper-wrapper">
-                <div class="swiper-slide box" nombre="Naranja">
+                <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-1.png')}}" alt="">
                     <h3>Naranja fresca</h3>
                     <div class="price"> $3.500 - $5.000 </div>
@@ -222,7 +208,6 @@
                 </div>
             </div>
         </div>
-
         <div class="swiper product-slider">
             <div class="swiper-wrapper">
                 <div class="swiper-slide box">
@@ -231,21 +216,18 @@
                     <div class="price"> $5.400 - $6.800 </div>
                     <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-6.png')}}" alt="">
                     <h3>Aguacate fresco</h3>
                     <div class="price"> $4.500 - $6.500 </div>
                     <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-7.png')}}" alt="">
                     <h3>Zanahoria fresca</h3>
                     <div class="price"> $5.200 - $6.800 </div>
                     <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar</a>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/product-8.png')}}" alt="">
                     <h3>Limón</h3>
@@ -254,56 +236,40 @@
                 </div>
             </div>
         </div>
-
     </section>
-
     <!-- products section ends -->
 
     <!-- categories section starts  -->
-
     <section class="categories" id="categories">
-
         <h1 class="heading"> <span> Categorías de productos </span></h1>
-
         <div class="box-container">
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/cat-1.png')}}" alt="">
                 <h3>Vegetales</h3>
                 <p>Hasta un 45% de descuento</p>
                 <<a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar ahora</a>
             </div>
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/cat-2.png')}}" alt="">
                 <h3>Frutas frescas</h3>
                 <p>Hasta un 45% de descuento</p>
                 <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar ahora</a>
             </div>
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/cat-4.png')}}" alt="">
                 <h3>Carne fresca</h3>
                 <p>Hasta un 45% de descuento</p>
                 <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modallogin">Comprar ahora</a>
             </div>
-
         </div>
-
     </section>
-
     <!-- categories section ends -->
 
     <!-- review section starts  -->
-
     <section class="review" id="review">
-
         <h1 class="heading"> <span>Comentarios de clientes </span></h1>
-
         <div class="swiper review-slider">
-
             <div class="swiper-wrapper">
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/pic-1.png')}}" alt="">
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
@@ -316,7 +282,6 @@
                         <i class="fas fa-star-half-alt"></i>
                     </div>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/pic-2.png')}}" alt="">
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
@@ -329,7 +294,6 @@
                         <i class="fas fa-star-half-alt"></i>
                     </div>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/pic-3.png')}}" alt="">
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
@@ -342,7 +306,6 @@
                         <i class="fas fa-star-half-alt"></i>
                     </div>
                 </div>
-
                 <div class="swiper-slide box">
                     <img src="{{url_for('static', filename='image/pic-4.png')}}" alt="">
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde sunt fugiat dolore ipsum id est maxime ad tempore quasi tenetur.</p>
@@ -355,23 +318,15 @@
                         <i class="fas fa-star-half-alt"></i>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
     <!-- review section ends -->
 
     <!-- blogs section starts  -->
-
     <section class="blogs" id="blogs">
-
         <h1 class="heading"> <span>Nuestro blogs</span> </h1>
-
         <div class="box-container">
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/blog-1.jpg')}}" alt="">
                 <div class="content">
@@ -384,7 +339,6 @@
                     <a href="#" class="btn">leer más...</a>
                 </div>
             </div>
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/blog-2.jpg')}}" alt="">
                 <div class="content">
@@ -397,7 +351,6 @@
                     <a href="#" class="btn">leer más...</a>
                 </div>
             </div>
-
             <div class="box">
                 <img src="{{url_for('static', filename='image/blog-3.jpg')}}" alt="">
                 <div class="content">
@@ -410,18 +363,13 @@
                     <a href="#" class="btn">leer más...</a>
                 </div>
             </div>
-
         </div>
-
     </section>
-
     <!-- blogs section ends -->
 
     <!-- footer section starts  -->
     <section class="footer">
-
         <div class="box-container">
-
             <div class="box">
                 <h3> Tiffany Co. <i class="fas fa-shopping-basket"></i> </h3>
                 <p>Productos frescos y orgánicos para ti.</p>
@@ -432,7 +380,6 @@
                     <a href="#" class="fab fa-linkedin"></a>
                 </div>
             </div>
-
             <div class="box">
                 <h3>Contacto</h3>
                 <a href="#" class="links"> <i class="fas fa-phone"></i> +123-456-7890 </a>
@@ -440,8 +387,6 @@
                 <a href="#" class="links"> <i class="fas fa-envelope"></i> grupo383@gmail.com </a>
                 <a href="#" class="links"> <i class="fas fa-map-marker-alt"></i> Colombia </a>
             </div>
-
-
             <div class="box">
                 <h3>Boletín Informativo </h3>
                 <p>Suscríbete para recibir novedades sobre nuestras ofertas</p>
@@ -449,11 +394,8 @@
                 <input type="submit" value="¡Subscribete!" class="btn">
                 <img src="{{url_for('static', filename='image/payment.png')}}" class="payment-img" alt="">
             </div>
-
         </div>
-
         <div class="credit"> Copyright 2021 - <span> Misión TIC 2022 | Equipo 3 - Grupo 38 | UNINORTE</span> - All rights reserved </div>
-
     </section>
 
     <!-- footer section ends -->
