@@ -236,7 +236,8 @@
             <div class="swiper-wrapper">
                 {% for comenta in comentarios %}
                 <div class="swiper-slide box">
-                    <h3>{{comenta.users.nombre}}</h3>
+                    <h4>{{comenta.users.nombre}}</h4>
+                    <h5>Producto: {{comenta.products.producto}}</h5>
                     <p>{{comenta.comentario}}</p>
                     <p>{{comenta.pub_date.strftime('%Y-%m-%d')}}</p>
                 </div>
